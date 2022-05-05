@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import TodoLayout from './Components/TodoLayout';
+import { colors } from './Styles/GlobalColors';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+     <TodoLayout/>
     </View>
   );
 }
@@ -13,8 +14,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // backgroundColor: colors.navy,
+    alignItems: "center",
+    justifyContent: 'flex-start',
+    paddingTop:100
   },
 });
