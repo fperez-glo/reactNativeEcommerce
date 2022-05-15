@@ -1,10 +1,10 @@
-import React from 'react'
+import { useState } from 'react'
 import { TextInput, StyleSheet } from 'react-native'
 
-const Searcher = ({ onChangeText }) => {
-
+const Searcher = ({ onChangeText, searchInputValue }) => {
+  
   return (
-    <TextInput style={styles.textInput} placeholder={"Search"} onChangeText={onChangeText}>
+    <TextInput style={styles.textInput} placeholder={"Search"} onChangeText={onChangeText} value={searchInputValue}>
         
     </TextInput>
   )

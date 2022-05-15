@@ -1,20 +1,12 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { FlatList, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { colors } from "../styles/globalColors";
 import Searcher from "./Searcher";
 
-const CategoriesContainer = () => {
-  const renderCategories = ({ item }) => {
-    return (
-        <View>
-            <TouchableOpacity style={styles.categoriesButton}>
-                <Text style={styles.categoriesText}>{item.description}</Text>
-            </TouchableOpacity>
-        </View>
-        
-    );
-  };
-
+const CategoriesContainer = ({onPressCategory}) => {
+  const [ categoryInput, setCategoryInput ] = useState("");
+  const [ categoriesData, setCategoriesData] = useState(null);
+  
   const categories = [
     {
       id: 1,
@@ -34,14 +26,40 @@ const CategoriesContainer = () => {
     },
   ];
 
+  useEffect(() => {
+    setCategoriesData(categories);
+  },[])
+
+  const renderCategories = ({ item }) => {
+    return (
+        <View>
+          <TouchableOpacity style={styles.categoriesButton} onPress={() => onPressCategory(item)}>
+            <Text style={styles.categoriesText}>{item.description}</Text>
+          </TouchableOpacity>
+        </View>
+    );
+  };
+
+  const searchCategory = (text) => {  
+    setCategoryInput(text);
+    if (text !== "" && categoriesData.length) {
+      const categoryFilter = categoriesData.filter(category => category.description.toLowerCase().search(text.toLowerCase()) !== -1)
+      setCategoriesData(categoryFilter)
+    } else {
+      setCategoriesData(categories);
+    }
+  }
+
   return (
     <View style={styles.container}>
-        <Searcher></Searcher>
+      <Searcher onChangeText={searchCategory} searchInputValue={categoryInput}></Searcher>
       <FlatList
         renderItem={renderCategories}
-        data={categories}
+        data={categoriesData}
         keyExtractor={(category) => category.id}
         horizontal
+        // pagingEnabled={true}
+        showsHorizontalScrollIndicator={false}
       />
     </View>
   );
