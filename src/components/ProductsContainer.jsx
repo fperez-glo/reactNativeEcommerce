@@ -12,7 +12,8 @@ import Searcher from "./Searcher";
 const ProductsContainer = ({
   selectedCategory,
   // onPressProduct,
-  onPressHandleBack,
+  // onPressHandleBack,
+  navigation
 }) => {
   const [productsData, setProductsData] = useState(null);
 
@@ -53,7 +54,12 @@ const ProductsContainer = ({
   }
 
   const renderProducts = ({ item }) => {
-    return item.categoryId === selectedCategory.id ? (
+    // return item.categoryId === selectedCategory.id ? (
+    ////                                                                      ////
+    // TODO:    Por el momento dejo hardcodeada una categoria hasta poder     ////
+    // TODO:    pasarle informacion al componente por medio de la navegacion. ////
+    ////                                                                      ////
+    return item.categoryId === 1 ? (
       <View>
         <TouchableOpacity
           style={styles.productsButton}
@@ -81,6 +87,10 @@ const ProductsContainer = ({
       setProductsData(products);
     }
   };
+
+  const onPressHandleBack = () => {
+    navigation.goBack();
+  } 
 
   return (
     <View style={styles.container}>

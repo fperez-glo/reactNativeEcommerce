@@ -1,73 +1,42 @@
 import { useState } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
 import CategoriesContainer from "../components/CategoriesContainer";
 import ProductsContainer from "../components/ProductsContainer";
 
-const Home = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+const Home = ({ navigation }) => {
 
-  const handleSelectCategory = (category) => {
-    setSelectedCategory(category);
-  };
-
-  const handleBackProducts = () => {
-    setSelectedCategory(null);
+  const handleSelectCategory = () => {
+    navigation.navigate("Products")
   };
 
   return (
-    <View style={styles.homeContainer}>
-      {/* <TouchableOpacity
-            style={styles.button}>
-            <Text>Aceptar</Text>
-        </TouchableOpacity> */}
-      {selectedCategory ? (
-        <View style={styles.productsContainer}>
-          <Text>Productos</Text>
-          <ProductsContainer
-          onPressHandleBack={handleBackProducts}
-          selectedCategory={selectedCategory}
-        />
-        </View>
-        
-      ) : (
-        <View style={styles.categoriesContainer}>
-          <Text>Categorias de Productos</Text>
-          <CategoriesContainer
+    <SafeAreaView>
+      <View style={styles.homeContainer}>
+        <Text>Categorias de Productos</Text>
+        <CategoriesContainer
           onPressCategory={handleSelectCategory}
-          />
-        </View>
-        
-      )}
-    </View>
+        />
+      </View>
+    </SafeAreaView>
+    
   );
 };
 
 const styles = StyleSheet.create({
   homeContainer: {
-    width: "90%",
+    // width: "90%",
     height: "95%",
     // backgroundColor:"green",
     justifyContent: "flex-start",
     alignItems: "center",
-  },
-  productsContainer: {
-    width: "100%",
-    height: "100%",
-    // backgroundColor:"green",
-    justifyContent: "flex-start",
-    alignItems: "center",
-  },
-  categoriesContainer: {
-    width: "100%",
-    height: "100%",
-    // backgroundColor:"green",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    padding: 5,
+    marginTop: 42
   },
   button: {
     backgroundColor: "lightblue",
     width: 100,
     height: 40,
+    marginTop: 20,
     borderRadius: 25,
     padding: 10,
     justifyContent: "center",

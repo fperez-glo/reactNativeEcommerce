@@ -1,19 +1,20 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
+import MainNavigator from './src/navigation/shop';
 import Home from './src/screen/Home';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Home/>
-    </View>
+    <SafeAreaView style={styles.container}>
+      
+        <MainNavigator/>
+      
+    </SafeAreaView>
+      
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   }
 });
