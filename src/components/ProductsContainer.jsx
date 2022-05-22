@@ -118,6 +118,9 @@ const styles = StyleSheet.create({
     // backgroundColor:"red",
     width: "100%",
     height: 200,
+    alignItems: "center",
+    // padding: 5,
+    marginTop: 42
   },
   productsButton: {
     backgroundColor: colors.lighGreen,
