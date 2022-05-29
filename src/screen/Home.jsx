@@ -1,7 +1,5 @@
-import { useState } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
+import { Text, View, StyleSheet, SafeAreaView } from "react-native";
 import CategoriesContainer from "../components/CategoriesContainer";
-import ProductsContainer from "../components/ProductsContainer";
 
 const Home = ({ navigation }) => {
 
