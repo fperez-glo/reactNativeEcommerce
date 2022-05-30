@@ -1,0 +1,4 @@
+const PREFIX = 'categories';
+
+export const SET_CATEGORY_SELECTED = `${PREFIX}/SET_CATEGORY_SELECTED`;
+export const SET_INITIAL_DATA = `${PREFIX}/SET_INITIAL_DATA`;

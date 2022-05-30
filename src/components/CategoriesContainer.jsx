@@ -1,9 +1,26 @@
+import { bindActionCreators } from "@reduxjs/toolkit";
 import { useState, useEffect } from "react";
 import { FlatList, Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { connect, useSelector } from "react-redux";
 import { colors } from "../styles/globalColors";
 import Searcher from "./Searcher";
+import { setSelectedCategory } from "../features/categories";
 
-const CategoriesContainer = ({onPressCategory}) => {
+const mapStateToProps = () => ({
+  categorias: useSelector(state => state.categories.data),
+  // selectedCategory: useSelector(state => state.categories.selectedCategory || null)
+});
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      setSelectedCategory,
+    },
+    dispatch,
+  );
+};
+
+const CategoriesContainer = ({onPressCategory, categorias, setSelectedCategory, selectedCategory}) => {
   const [ categoryInput, setCategoryInput ] = useState("");
   const [ categoriesData, setCategoriesData] = useState(null);
   
@@ -30,10 +47,20 @@ const CategoriesContainer = ({onPressCategory}) => {
     setCategoriesData(categories);
   },[])
 
+
+  // console.log("categorias desde redux!!!;", categorias)
+  // console.log("selectedCategory!!!;", selectedCategory)
+
+  const onPressHere =(item)=> {
+    console.log("category:", item)
+    setSelectedCategory(item.id)
+  }
+
+
   const renderCategories = ({ item }) => {
     return (
         <View>
-          <TouchableOpacity style={styles.categoriesButton} onPress={() => onPressCategory(item)}>
+          <TouchableOpacity style={styles.categoriesButton} onPress={() => onPressHere(item)}>
             <Text style={styles.categoriesText}>{item.description}</Text>
           </TouchableOpacity>
         </View>
@@ -97,4 +124,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default CategoriesContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer);

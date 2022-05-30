@@ -1,37 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-const categories = [
-    {
-      id: 1,
-      description: "Microprocesadores",
-    },
-    {
-      id: 2,
-      description: "Tarjetas de Video",
-    },
-    {
-      id: 3,
-      description: "Fuentes",
-    },
-    {
-      id: 4,
-      description: "Almacenamiento",
-    },
-  ];
+import { CATEGORIES } from "../../database/CATEGORIES";
 
 const initialState = {
-    value: {
-        categories,
-        selectedCategory: null,
-    }
+    data: CATEGORIES,
+    selectedCategory: null,
 }
 
 export const categoriesSlice = createSlice({
     name: "categories",
     initialState,
     reducers: {
-
+      setSelectedCategory: (state, action) => {
+        const categorySelected = state.data.find(category => category.id === action.payload)
+        state.selectedCategory = categorySelected;
+      }
     }
 })
 
+export const  { setSelectedCategory } = categoriesSlice.actions;
 export default categoriesSlice.reducer;
