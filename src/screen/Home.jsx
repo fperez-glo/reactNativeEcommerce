@@ -1,11 +1,22 @@
-import { useState } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
+import { bindActionCreators } from "@reduxjs/toolkit";
+import { Text, View, StyleSheet, SafeAreaView } from "react-native";
+import { connect } from "react-redux";
 import CategoriesContainer from "../components/CategoriesContainer";
-import ProductsContainer from "../components/ProductsContainer";
+import { setSelectedCategory } from "../features/categories";
 
-const Home = ({ navigation }) => {
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      setSelectedCategory,
+    },
+    dispatch,
+  );
+};
 
-  const handleSelectCategory = () => {
+const Home = ({ navigation, setSelectedCategory }) => {
+
+  const handleSelectCategory = (item) => {
+    setSelectedCategory(item.id)
     navigation.navigate("Products")
   };
 
@@ -52,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default connect(null, mapDispatchToProps)(Home);

@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-const CategoriesContainer = ({onPressCategory, categorias, setSelectedCategory, selectedCategory}) => {
+const CategoriesContainer = ({navigation, onPressCategory, categorias, setSelectedCategory, selectedCategory}) => {
   const [ categoryInput, setCategoryInput ] = useState("");
   const [ categoriesData, setCategoriesData] = useState(null);
   
@@ -50,17 +50,18 @@ const CategoriesContainer = ({onPressCategory, categorias, setSelectedCategory, 
 
   // console.log("categorias desde redux!!!;", categorias)
   // console.log("selectedCategory!!!;", selectedCategory)
-
+  console.log("navigation:", navigation)
   const onPressHere =(item)=> {
-    console.log("category:", item)
+    console.log("category:", item.id)
     setSelectedCategory(item.id)
+    navigation.navigate("Products")
   }
 
 
   const renderCategories = ({ item }) => {
     return (
         <View>
-          <TouchableOpacity style={styles.categoriesButton} onPress={() => onPressHere(item)}>
+          <TouchableOpacity style={styles.categoriesButton} onPress={() => onPressCategory(item)}>
             <Text style={styles.categoriesText}>{item.description}</Text>
           </TouchableOpacity>
         </View>

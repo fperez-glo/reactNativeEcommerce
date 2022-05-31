@@ -6,11 +6,17 @@ import {
   FlatList,
   Text,
 } from "react-native";
+import { connect, useSelector } from "react-redux";
 import { colors } from "../styles/globalColors";
 import Searcher from "./Searcher";
 
+const mapStateToProps = () => ({
+  categorias: useSelector(state => state.categories.data),
+  selectedCategoryId: useSelector(state => state.categories.selectedCategory || null)
+});
+
 const ProductsContainer = ({
-  selectedCategory,
+  selectedCategoryId,
   // onPressProduct,
   // onPressHandleBack,
   navigation
@@ -54,12 +60,7 @@ const ProductsContainer = ({
   }
 
   const renderProducts = ({ item }) => {
-    // return item.categoryId === selectedCategory.id ? (
-    ////                                                                      ////
-    // TODO:    Por el momento dejo hardcodeada una categoria hasta poder     ////
-    // TODO:    pasarle informacion al componente por medio de la navegacion. ////
-    ////                                                                      ////
-    return item.categoryId === 1 ? (
+    return item.categoryId === selectedCategoryId ? (
       <View>
         <TouchableOpacity
           style={styles.productsButton}
@@ -162,4 +163,4 @@ const styles = StyleSheet.create({
   productsText: {},
 });
 
-export default ProductsContainer;
+export default connect(mapStateToProps, null)(ProductsContainer);

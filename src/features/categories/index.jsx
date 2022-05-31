@@ -12,7 +12,7 @@ export const categoriesSlice = createSlice({
     reducers: {
       setSelectedCategory: (state, action) => {
         const categorySelected = state.data.find(category => category.id === action.payload)
-        state.selectedCategory = categorySelected;
+        state.selectedCategory = categorySelected.id;
       }
     }
 })
