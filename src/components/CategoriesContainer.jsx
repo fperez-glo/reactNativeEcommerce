@@ -4,10 +4,10 @@ import { FlatList, Text, View, StyleSheet, TouchableOpacity } from "react-native
 import { connect, useSelector } from "react-redux";
 import { colors } from "../styles/globalColors";
 import Searcher from "./Searcher";
-import { setSelectedCategory } from "../features/categories";
+import { fetchCategories, setSelectedCategory } from "../features/categories";
 
 const mapStateToProps = () => ({
-  categorias: useSelector(state => state.categories.data),
+  // categories: useSelector(state => state.categories.data),
   // selectedCategory: useSelector(state => state.categories.selectedCategory || null)
 });
 
@@ -15,44 +15,32 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       setSelectedCategory,
+      fetchCategories,
     },
     dispatch,
   );
 };
 
-const CategoriesContainer = ({navigation, onPressCategory, categorias, setSelectedCategory, selectedCategory}) => {
+const CategoriesContainer = ({navigation, onPressCategory, categories, setSelectedCategory, selectedCategory, fetchCategories}) => {
   const [ categoryInput, setCategoryInput ] = useState("");
   const [ categoriesData, setCategoriesData] = useState(null);
   
-  const categories = [
-    {
-      id: 1,
-      description: "Microprocesadores",
-    },
-    {
-      id: 2,
-      description: "Tarjetas de Video",
-    },
-    {
-      id: 3,
-      description: "Fuentes",
-    },
-    {
-      id: 4,
-      description: "Almacenamiento",
-    },
-  ];
 
   useEffect(() => {
-    setCategoriesData(categories);
+    fetchCategoriesData();
   },[])
+
+  const fetchCategoriesData = async () => {
+    const dbCategories = await fetchCategories();
+    setCategoriesData(dbCategories.payload);
+  }
 
 
   // console.log("categorias desde redux!!!;", categorias)
   // console.log("selectedCategory!!!;", selectedCategory)
-  console.log("navigation:", navigation)
+  
   const onPressHere =(item)=> {
-    console.log("category:", item.id)
+    
     setSelectedCategory(item.id)
     navigation.navigate("Products")
   }
