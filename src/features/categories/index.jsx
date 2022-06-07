@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { CATEGORIES } from "../../database/CATEGORIES";
-import { aplicationConfig } from "../../config/aplication.config";
 import axios from "axios"
+import config from "../../config/aplication.config"
 
 const initialState = {
     data: [],
@@ -13,7 +12,7 @@ const initialState = {
 export const fetchCategories = createAsyncThunk(
   "categories/getData",
   async (asyncThunk) => {
-    const res = await axios.get(`${aplicationConfig.DB}/categories.json`);
+    const res = await axios.get(`${config.extra.firebaseRealtimeDbUri}/categories.json`);
     return res.data; 
   }
 )

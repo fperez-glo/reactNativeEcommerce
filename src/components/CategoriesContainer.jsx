@@ -30,6 +30,8 @@ const CategoriesContainer = ({navigation, onPressCategory, categories, setSelect
     fetchCategoriesData();
   },[])
 
+  console.log("selectedCategory!!!:", useSelector(state => state.categories.selectedCategory || null))
+
   const fetchCategoriesData = async () => {
     const dbCategories = await fetchCategories();
     setCategoriesData(dbCategories.payload);
