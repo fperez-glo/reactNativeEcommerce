@@ -7,6 +7,7 @@ import { colors } from "../styles/globalColors";
 import { setUser } from "../features/auth";
 import config from "../config/aplication.config";
 import axios from "axios";
+import { showError, showInfo } from "../utils/MessageBar";
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
@@ -30,9 +31,9 @@ const LogIn = ({ setUser }) => {
         password: passwordInput,
         returnSecureToken: false,
       });
-      setUser(authentication?.email);
+      setUser(authentication.data?.email);
     } catch (error) {
-      console.log("CREDENCIALES INCORRECTAS O USUARIO INHABILITADO");
+      showError({ message: "Credenciales incorrectas." });
     }
 
     setLoading(false);

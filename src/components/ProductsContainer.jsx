@@ -7,19 +7,31 @@ import {
   Text,
 } from "react-native";
 import { connect, useSelector } from "react-redux";
+import { addCartProduct } from "../features/cart";
 import { colors } from "../styles/globalColors";
 import Searcher from "./Searcher";
+import { bindActionCreators } from "@reduxjs/toolkit";
+import { showSuccess } from "../utils/MessageBar";
 
-const mapStateToProps = () => ({
-  categorias: useSelector(state => state.categories.data),
-  selectedCategoryId: useSelector(state => state.categories.selectedCategory || null)
+const mapStateToProps = (state) => ({
+  selectedCategoryId: useSelector(state => state.categories.selectedCategory || null),
 });
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      addCartProduct,
+    },
+    dispatch,
+  );
+};
 
 const ProductsContainer = ({
   selectedCategoryId,
   // onPressProduct,
   // onPressHandleBack,
-  navigation
+  addCartProduct,
+  navigation,
 }) => {
   const [productsData, setProductsData] = useState(null);
 
@@ -55,9 +67,12 @@ const ProductsContainer = ({
     setProductsData(products);
   }, []);
 
-  const onPressProduct = (product) => {
-    console.log("producto:", product)
+  const onPressProduct = async (product) => {
+    addCartProduct(product);
+    showSuccess({message:"Producto agregado al carrito."})
   }
+
+  
 
   const renderProducts = ({ item }) => {
     return item.categoryId === selectedCategoryId ? (
@@ -163,4 +178,4 @@ const styles = StyleSheet.create({
   productsText: {},
 });
 
-export default connect(mapStateToProps, null)(ProductsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsContainer);
