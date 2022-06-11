@@ -30,7 +30,7 @@ const LogIn = ({ setUser }) => {
         password: passwordInput,
         returnSecureToken: false,
       });
-      setUser(userInput);
+      setUser(authentication?.email);
     } catch (error) {
       console.log("CREDENCIALES INCORRECTAS O USUARIO INHABILITADO");
     }
