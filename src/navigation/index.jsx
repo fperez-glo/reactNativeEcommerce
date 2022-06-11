@@ -1,13 +1,21 @@
 import { NavigationContainer } from "@react-navigation/native"
+import { connect } from "react-redux";
+import { selectUserInfo } from "../store/selectors";
 import UserLoggedTabNavigation from "./tabs/UserLogged"
+import UserNotLoggedTabNavigation from "./tabs/UserNotLogged";
 
+const mapStateToProps = (state) => ({
+  user: selectUserInfo(state),
+});
 
-const MainNavigator = () => {
+const MainNavigator = ({user}) => {
   return (
     <NavigationContainer>
-        <UserLoggedTabNavigation/>
+      {!user 
+        ? <UserNotLoggedTabNavigation/>
+        : <UserLoggedTabNavigation/>}
     </NavigationContainer>
   )
 }
 
-export default MainNavigator;
+export default connect(mapStateToProps, undefined)(MainNavigator);
