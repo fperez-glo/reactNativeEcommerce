@@ -1,15 +1,10 @@
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { useState, useEffect } from "react";
 import { FlatList, Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { colors } from "../styles/globalColors";
 import Searcher from "./Searcher";
 import { fetchCategories, setSelectedCategory } from "../features/categories";
-
-const mapStateToProps = () => ({
-  // categories: useSelector(state => state.categories.data),
-  // selectedCategory: useSelector(state => state.categories.selectedCategory || null)
-});
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
@@ -30,16 +25,10 @@ const CategoriesContainer = ({navigation, onPressCategory, categories, setSelect
     fetchCategoriesData();
   },[])
 
-  // console.log("selectedCategory!!!:", useSelector(state => state.categories.selectedCategory || null))
-
   const fetchCategoriesData = async () => {
     const dbCategories = await fetchCategories();
     setCategoriesData(dbCategories.payload);
   }
-
-
-  // console.log("categorias desde redux!!!;", categorias)
-  // console.log("selectedCategory!!!;", selectedCategory)
   
   const onPressHere =(item)=> {
     
@@ -115,4 +104,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer);
+export default connect(undefined, mapDispatchToProps)(CategoriesContainer);
