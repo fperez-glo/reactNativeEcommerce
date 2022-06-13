@@ -12,7 +12,7 @@ const Locations = ({navigation}) => {
 
   const [location, setLocation] = useState(undefined);
   const [staticMap, setStaticMap] = useState(undefined);
-  const [geoCode, setGeoCode] = useState(undefined)
+  const [geoCodeAdressLabel, setGeoCodeAdressLabel] = useState(undefined)
   const [textInput, setTextInput] = useState("");
 
   useEffect(() => {
@@ -55,7 +55,8 @@ const Locations = ({navigation}) => {
     const geoCodeUrl = replaceParams(config.extra.googleCloudPlatformGeoCodeApi);
     // console.log("geoCodeUrl:", geoCodeUrl)
     const geoCode = await axios.get(geoCodeUrl);
-    console.log("geoCode:", geoCode.data.results[0].formatted_address)
+    setGeoCodeAdressLabel(geoCode);
+    console.log("geoCode:", geoCode.data.results[0].formatted_address);
 
   }
 
