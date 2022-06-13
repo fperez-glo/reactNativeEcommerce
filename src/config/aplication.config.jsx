@@ -1,6 +1,6 @@
 
 // import 'dotenv/config';
-
+console.log("process.env.FIREBASE_PROJECT_API_KEY:",process.env.FIREBASE_PROJECT_API_KEY)
 export default {
   name: 'CoolApp',
   version: '1.0.0',

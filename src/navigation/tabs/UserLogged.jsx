@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ShopNavigator from "../stacks/shop/index";
 import CartNavigator from "../stacks/cart/index";
+import ConfigurationNavigator from "../stacks/configuration";
 import { StyleSheet } from "react-native";
 import { AntDesign, Entypo } from '@expo/vector-icons';
 
@@ -32,6 +33,15 @@ const UserLoggedTabNavigation = () => {
             options={{
               tabBarIcon: ({focused}) => {
                 return <AntDesign name="shoppingcart" size={24} color={focused ? "#006600" : "#8e8e93"} />
+              },
+            }}
+        />
+        <BottomTabs.Screen
+            name= "ConfigTab"
+            component={ConfigurationNavigator}
+            options={{
+              tabBarIcon: ({focused}) => {
+                return <AntDesign name="setting" size={24} color={focused ? "#006600" : "#8e8e93"} />
               },
             }}
         />
