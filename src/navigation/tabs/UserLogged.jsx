@@ -3,7 +3,7 @@ import ShopNavigator from "../stacks/shop/index";
 import CartNavigator from "../stacks/cart/index";
 import ConfigurationNavigator from "../stacks/configuration";
 import { StyleSheet } from "react-native";
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -41,7 +41,7 @@ const UserLoggedTabNavigation = () => {
             component={ConfigurationNavigator}
             options={{
               tabBarIcon: ({focused}) => {
-                return <AntDesign name="setting" size={24} color={focused ? "#006600" : "#8e8e93"} />
+                return <Ionicons name="settings" size={24} color={focused ? "#006600" : "#8e8e93"}/>
               },
             }}
         />
