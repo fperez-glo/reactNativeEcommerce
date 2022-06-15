@@ -1,133 +1,76 @@
+import {
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  View,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import LocationCard from "../components/LocationCard";
+import { selectAllLocations } from "../store/selectors";
+import { connect } from "react-redux";
 
-import { getCurrentPositionAsync, requestForegroundPermissionsAsync } from 'expo-location'
-import {Text,StyleSheet,SafeAreaView, Image, View, TextInput} from 'react-native'
-import { useEffect, useState } from "react"
-import config from "../config/aplication.config"
-import StaticMapConsts from "./const/StaticMap.enum";
-import Button from "../components/Button"
-import { showInfo } from '../utils/MessageBar'
-import axios from 'axios'
+const mapStateToProps = (state) => ({
+  locations: selectAllLocations(state)
+});
 
-const Locations = ({navigation}) => {
+const Locations = ({ navigation, locations }) => {
+  const handleAddLocation = () => {
+    navigation.navigate("MapLocationSearcher");
+  };
 
-  const [location, setLocation] = useState(undefined);
-  const [staticMap, setStaticMap] = useState(undefined);
-  const [geoCodeAdressLabel, setGeoCodeAdressLabel] = useState(undefined)
-  const [textInput, setTextInput] = useState("");
-
-  useEffect(() => {
-    requestLocationPermission();
-    
-  }, [])
-
-  useEffect(() => {
-    if (location?.latitude){
-      getStaticMap();
-      getGeoCode();
-    }
-    
-  }, [location])
-  
-  const requestLocationPermission = async () => {
-    const { status } = await requestForegroundPermissionsAsync();
-
-    if(status !== "granted") {
-      showInfo({message:"No se otorgo permiso de locacion a la aplicacion"})
-      navigation.goBack()
-      return
-    }
-
-    const location = await getCurrentPositionAsync();
-    setLocation({
-      latitude: location?.coords.latitude,
-      longitude: location?.coords.longitude
-    });
-
-    
-  }
-
-  const getStaticMap = async () => {
-    const mapUrl = replaceParams(config.extra.googleCloudPlatformStaticMapsApi); 
-    setStaticMap(mapUrl);
-  }
-
-  const getGeoCode = async() => {
-    const geoCodeUrl = replaceParams(config.extra.googleCloudPlatformGeoCodeApi);
-    // console.log("geoCodeUrl:", geoCodeUrl)
-    const geoCode = await axios.get(geoCodeUrl);
-    setGeoCodeAdressLabel(geoCode);
-    console.log("geoCode:", geoCode.data.results[0].formatted_address);
-
-  }
-
-  const replaceParams = (url) => {
-    url = url.replace(StaticMapConsts.mapHeight, config.extra.mapHeight);
-    url = url.replace(StaticMapConsts.mapWidth, config.extra.mapWidth);
-    url = url.replace(StaticMapConsts.mapZoom, config.extra.mapZoom);
-    url = url.replaceAll(StaticMapConsts.mapLatitude, location.latitude);
-    url = url.replaceAll(StaticMapConsts.mapLongitude, location.longitude);
-
-    return url;
+  const renderLocations = ({ item }) => {
+    return (
+      <LocationCard title={`${item.adress}, CP${item.cp}, ${item.city}`}/>
+    )
   }
 
   return (
-      <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerContainer}>
         <Text style={styles.title}>Direcciones</Text>
-      
-      <View style={styles.mapContainer}>
-      <Image source={{uri: staticMap}} style={styles.mapImage}></Image>
+        <View style={styles.addButtonContainer}>
+          <TouchableOpacity onPress={() => handleAddLocation()}>
+            <Ionicons name="add-circle-outline" size={30} color="black" />
+          </TouchableOpacity>
+        </View>
       </View>
-      
-      <TextInput style={styles.textInput} onChangeText={setTextInput} value={textInput}></TextInput>
-      <Button buttonTitle='Volver'  onPress={()=> {navigation.goBack()}}></Button>
-      </SafeAreaView>
-      
-    
-  )
-}
+        <FlatList
+          renderItem={renderLocations}
+          data={locations}
+          keyExtractor={(location) => location.adress}
+          vertical
+          style={styles.locationsContainer}
+          // pagingEnabled={true}
+          showsVerticalScrollIndicator={false}
+        />
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    alignItems:"center",
-
-    height:"100%",
-    // backgroundColor:"red"
-  },  
+   
+  },
+  headerContainer: {
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  addButtonContainer: {
+    width:"95%",
+    alignItems: "flex-end",
+  },
   title: {
-      fontSize: 28,
-      fontWeight:"bold",  
+    fontSize: 28,
+    fontWeight: "bold",
+    position:"absolute"
   },
-  mapImage: {
-    width: 350,
-    height: 350,
-    borderRadius: 10,
-  },
-  mapContainer: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 2,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 2.5,
-    elevation: 3,
-    marginVertical: 8
-  },
-  textInput: {
-    width:"90%",
-    height: 35,
-    backgroundColor:"white",
-    borderRadius: 25,
-    padding: 8,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 2.5,
-    elevation: 3,
+  locationsContainer: {
+    // backgroundColor:"green",
+    padding:7,
+    height:"100%"
   }
-})
+});
 
-export default Locations
+export default connect(mapStateToProps, undefined)(Locations);
