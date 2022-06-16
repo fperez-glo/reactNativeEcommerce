@@ -22,7 +22,7 @@ const Locations = ({ navigation, locations }) => {
 
   const renderLocations = ({ item }) => {
     return (
-      <LocationCard title={`${item.adress}, CP${item.cp}, ${item.city}`}/>
+      <LocationCard title={`${item.street}, ${item.cp}, ${item.country}`}/>
     )
   }
 

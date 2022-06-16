@@ -10,6 +10,8 @@ import {
   View,
   TextInput,
   ActivityIndicator,
+  FlatList,
+  TouchableOpacity,
 } from "react-native";
 import { useEffect, useState } from "react";
 import config from "../config/aplication.config";
@@ -34,9 +36,10 @@ const mapDispatchToProps = (dispatch) => {
 const MapLocationSearcher = ({ navigation, addLocation }) => {
   const [location, setLocation] = useState(undefined);
   const [staticMap, setStaticMap] = useState(undefined);
-  const [geoCodeAdressLabel, setGeoCodeAdressLabel] = useState(undefined);
+  const [geoCodeAdress, setGeoCodeAdress] = useState(undefined);
   const [textInput, setTextInput] = useState("");
   const [loadingMap, setLoadingMap] = useState(true);
+  const [dropDownData, setDropDownData] = useState([]);
   // const [counter, setCounter] = useState(0);
 
   useEffect(() => {
@@ -46,7 +49,7 @@ const MapLocationSearcher = ({ navigation, addLocation }) => {
   useEffect(() => {
     if (location?.latitude) {
       getStaticMap();
-      getGeoCode();
+      // getGeoDefaultCode();
       setLoadingMap(false);
     }
   }, [location]);
@@ -72,18 +75,12 @@ const MapLocationSearcher = ({ navigation, addLocation }) => {
     setStaticMap(mapUrl);
   };
 
-  const getGeoCode = async () => {
+  const getGeoDefaultCode = async () => {
     const geoCodeUrl = replaceParams(
       config.extra.googleCloudPlatformGeoCodeApi
     );
-    console.log("geoCodeUrl:", geoCodeUrl)
     const geoCode = await axios.get(geoCodeUrl);
-
-    // const urladress ="https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyAvBSp5AIi_hZUJfTNd2Ece26hrr37Wces";
-    // const geoCodeAdress = await axios.get(urladress);
-    // console.log("geoCodeAdress:",geoCodeAdress.data.results[0])
-    setGeoCodeAdressLabel(geoCode.data.results[0].formatted_address);
-    // console.log("geoCode:", geoCode.data.results[0].formatted_address);
+    setGeoCodeAdress(geoCode.data.results[0].formatted_address);
   };
 
   const replaceParams = (url) => {
@@ -92,51 +89,92 @@ const MapLocationSearcher = ({ navigation, addLocation }) => {
     url = url.replace(StaticMapConsts.mapZoom, config.extra.mapZoom);
     url = url.replaceAll(StaticMapConsts.mapLatitude, location.latitude);
     url = url.replaceAll(StaticMapConsts.mapLongitude, location.longitude);
-
     return url;
   };
 
-  // const handleSearchAdress = (input) => {
-  //   setTextInput(input);
-    
-  //   // console.log(replacePlaceAutocompleteInput(input));
+  const handleOnChangeSearchAdress = async (input) => {
+    let autoCompleteData = [];
+    setTextInput(input);
+    if(input.length > 9){
+      const autocomplete = await axios.get(replacePlaceAutocompleteInput(input));
 
-  //   setTimeout( () => {
-  //     setCounter(counter +1)
-  //     const autocomplete = (await axios.get(replacePlaceAutocompleteInput(input))).data;
-  //     // console.log("autocomplete:", autocomplete.predictions)
-  //     autocomplete.predictions.forEach(place => {
-  //       console.log(place.description)
-  //     });
-  //   }, 5000);
+      autocomplete && autocomplete.data.predictions.forEach(place => {
+        const adress = {
+          id: Math.random(),
+          description: place.description,
+          selected: false,
+        }
+        autoCompleteData.push(adress)
+      });
 
-  // }
-  // console.log("veces que ejecuta la api:", counter)
+      setDropDownData(autoCompleteData);
+    } else {
+      setDropDownData([]);
+    }
+  }
 
   const replacePlaceAutocompleteInput = (input) => {
     let autoCompleteUrl = config.extra.googleCloudPlatformPlacesAutoCompleteApi;
-    autoCompleteUrl = autoCompleteUrl.replace("%PLACES_INPUT%", input);
-
+    autoCompleteUrl = autoCompleteUrl.replace(StaticMapConsts.autoCompletePlacesInput, input);
     return autoCompleteUrl;
   }
 
-  const handleConfirmLocation = async () => {
-    console.log("confirmo la locacion..")
-    
-    const autocomplete = await axios.get(replacePlaceAutocompleteInput(textInput));
-    // console.log("autocomplete:", autocomplete.predictions)
-    autocomplete && autocomplete.data.predictions.forEach(place => {
-      console.log(place.description)
+  const handleConfirmLocation = () => {
+    const adress = geoCodeAdress.split(",");
+    const location = {
+      street: adress[0],
+      country:adress[2],
+      cp: adress[1]
+    }
+    addLocation(location);
+    navigation.goBack()
+  }
+
+  const handleSelectLocation = async(item) => {
+    let newDropDownData = [];
+    setLoadingMap(true);
+    const geoCodeAdress = item.description.replaceAll(" ",StaticMapConsts.geoCodeSpace);
+    let geoCodeUrl = config.extra.googleCloudPlatformGeoCodeAdressApi;
+    geoCodeUrl = geoCodeUrl.replace(StaticMapConsts.mapAdress, geoCodeAdress);
+    const geoCode = await axios.get(geoCodeUrl);
+    setGeoCodeAdress(geoCode.data.results[0].formatted_address);
+    const {lat, lng} = geoCode.data.results[0].geometry.location;
+    setLocation({
+      latitude: lat,
+      longitude: lng,
     });
     
-    // const location = {
-    //   adress: textInput,
-    //   country:"AR",
-    //   city: "Buenos Aires",
-    //   cp: "1427"
-    // }
-    // addLocation(location);
-    // navigation.goBack()
+    //Marco el item seleccionado y desmarco todos los demas
+    dropDownData.forEach(adress => {
+      adress.selected = false;
+    })
+    item.selected = true;
+    const filterNoSelected = dropDownData.filter(adress => adress.id !== item.id)
+    // Primero meto el item seleccionado para que este arriba de todo del array.
+    newDropDownData.push(item);
+    newDropDownData.push(...filterNoSelected);
+    setDropDownData(newDropDownData);
+
+    setLoadingMap(false);
+  }
+
+  const renderLocationsMatched = ({item})=>{
+    return (
+      <TouchableOpacity 
+        style={{marginBottom:2}} 
+        onPress={()=> handleSelectLocation(item)}
+        >
+          {item.selected ?
+          <Text style={{
+            fontSize: 15, color:"blue", fontWeight:"bold"
+          }}>- {item.description}</Text>
+          : <Text style={{
+            fontSize: 15
+          }}>- {item.description}</Text>
+          }
+        
+      </TouchableOpacity>
+    )
   }
 
   return (
@@ -151,11 +189,31 @@ const MapLocationSearcher = ({ navigation, addLocation }) => {
         </View>
       )}
 
-      <TextInput
-        style={styles.textInput}
-        onChangeText={setTextInput}
-        value={textInput}
-      ></TextInput>
+        <View style={styles.dropDownLocations}>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={(input)=> handleOnChangeSearchAdress(input)}
+            value={textInput}
+            placeholder="Direccion"
+          />
+          {dropDownData.length ?
+              // Meti este flatlist para utilizarlo como un dropDown asi a lo bestia pero funciona.
+             <FlatList
+             renderItem={renderLocationsMatched}
+             data={dropDownData}
+             keyExtractor={(location) => location.id}
+             vertical
+             style={{borderColor:"grey", borderWidth:.5,borderRadius:10,padding:5, marginTop:5}}
+             // pagingEnabled={true}
+             showsVerticalScrollIndicator={false}
+           />
+           : null
+          }
+           
+          
+          
+        </View>
+      
       <View style={styles.buttonContainer}>
         <Button
           buttonTitle="Volver"
@@ -204,7 +262,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   textInput: {
-    width: "90%",
+    width: "100%",
     height: 35,
     backgroundColor: "white",
     borderRadius: 25,
@@ -232,6 +290,11 @@ const styles = StyleSheet.create({
     // width:100,
     height:"60%",
     // backgroundColor:'red'
+  },
+  dropDownLocations: {
+    // backgroundColor:"red",
+    height:"20%",
+    width:"90%"
   }
 });
 

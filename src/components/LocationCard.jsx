@@ -36,7 +36,7 @@ const LocationCard = ({
         style={styles.locationButton}
         onPress={() => handleEditLocation()}
       >
-        <Text>{title}</Text>
+        <Text style={styles.title}>{title}</Text>
         <AntDesign name="right" size={26} />
       </TouchableOpacity>
     </View>
@@ -77,6 +77,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 8,
   },
+  title: {
+    maxWidth:"90%",
+  }
 });
 
 export default LocationCard;

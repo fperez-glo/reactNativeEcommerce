@@ -28,14 +28,14 @@ const Cart = ({cartProducts, deleteCartProduct}) => {
         <Text style={styles.productsText}>{item.title}</Text>
         <TouchableOpacity
         onPress={() => handleDelete(item)}>
-          <Entypo name="trash" size={24} color={"red"} />
+
+          <Entypo name="trash" size={24} color={"red"}/>
         </TouchableOpacity>
       </View>
     )
   };
 
   const handleDelete = (product) => {
-    console.log(product);
     deleteCartProduct(product.id);
     showInfo({message:"Producto eliminado del carrito."})
   }

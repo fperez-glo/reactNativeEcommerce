@@ -11,7 +11,6 @@ export const locationSlice = createSlice({
     initialState,
     reducers: {
       addLocation: (state, action) => {
-        console.log("action payload:", action.payload);
         state.locations.push(action.payload);
       }
     },

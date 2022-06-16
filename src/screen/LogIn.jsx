@@ -24,9 +24,6 @@ const LogIn = ({ setUser }) => {
   const [loading, setLoading] = useState(undefined);
 
   const handleLogIn = async () => {
-    console.log("entra??", {
-      userInput, passwordInput, url: config.extra.firebaseAuthLogin
-    })
     setLoading(true);
     try {
       const authentication = await axios.post(config.extra.firebaseAuthLogin, {
@@ -34,7 +31,6 @@ const LogIn = ({ setUser }) => {
         password: passwordInput,
         returnSecureToken: false,
       });
-      console.log("authentication:",authentication.data)
       setUser(authentication.data?.email);
     } catch (error) {
       console.log("error:", error)
