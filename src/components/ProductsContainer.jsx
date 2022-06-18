@@ -12,17 +12,18 @@ import { colors } from "../styles/globalColors";
 import Searcher from "./Searcher";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { showSuccess } from "../utils/MessageBar";
+import { selectSelectedCategory } from "../store/selectors";
 
 const mapStateToProps = (state) => ({
-  selectedCategoryId: useSelector(state => state.categories.selectedCategory || null),
+  selectedCategoryId: selectSelectedCategory(state),
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       addCartProduct,
     },
-    dispatch,
+    dispatch
   );
 };
 
@@ -61,6 +62,31 @@ const ProductsContainer = ({
       categoryId: 4,
       title: "WD Blue 1TB",
     },
+    {
+      id: 6,
+      categoryId: 1,
+      title: "Amd Ryzen 5 5600x",
+    },
+    {
+      id: 7,
+      categoryId: 1,
+      title: "Amd Ryzen 5 3600",
+    },
+    {
+      id: 8,
+      categoryId: 4,
+      title: "WD Black 1TB",
+    },
+    {
+      id: 9,
+      categoryId: 4,
+      title: "WD Blue 500GB",
+    },
+    {
+      id: 10,
+      categoryId: 1,
+      title: "Intel I5 7400F",
+    },
   ];
 
   useEffect(() => {
@@ -69,10 +95,8 @@ const ProductsContainer = ({
 
   const onPressProduct = async (product) => {
     addCartProduct(product);
-    showSuccess({message:"Producto agregado al carrito."})
-  }
-
-  
+    showSuccess({ message: "Producto agregado al carrito." });
+  };
 
   const renderProducts = ({ item }) => {
     return item.categoryId === selectedCategoryId ? (
@@ -84,9 +108,7 @@ const ProductsContainer = ({
           <Text style={styles.productsText}>{item.title}</Text>
         </TouchableOpacity>
       </View>
-    ) : (
-      null
-    );
+    ) : null;
   };
 
   const [productInput, setProductInput] = useState("");
@@ -106,7 +128,7 @@ const ProductsContainer = ({
 
   const onPressHandleBack = () => {
     navigation.goBack();
-  } 
+  };
 
   return (
     <View style={styles.container}>
@@ -118,9 +140,10 @@ const ProductsContainer = ({
         renderItem={renderProducts}
         data={productsData}
         keyExtractor={(product) => product.id}
-        horizontal
-        // pagingEnabled={true}
-        showsHorizontalScrollIndicator={false}
+        // horizontal
+        pagingEnabled={true}
+        numColumns={2}
+        showsVerticalScrollIndicator={false}
       />
       <TouchableOpacity style={styles.button} onPress={onPressHandleBack}>
         <Text>Volver</Text>
@@ -131,20 +154,20 @@ const ProductsContainer = ({
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor:"red",
+    backgroundColor:"red",
     width: "100%",
-    height: 200,
+    height: "100%",
     alignItems: "center",
     // padding: 5,
-    marginTop: 42
+    // marginTop: 42,
   },
   productsButton: {
     backgroundColor: colors.lighGreen,
-    margin: 5,
-    height: 100,
-    width: 100,
+    margin: 10,
+    height: 150,
+    width: 150,
     borderRadius: 20,
-    padding: 10,
+    // padding: 10,
     justifyContent: "center",
     alignItems: "center",
     borderColor: colors.lightGrey,
@@ -157,10 +180,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.27,
     shadowRadius: 2.5,
     elevation: 3,
+    // backgroundColor:"blue"
   },
   button: {
     backgroundColor: "lightblue",
-    width: 100,
+    width: 200,
     height: 40,
     borderRadius: 25,
     padding: 10,
@@ -175,7 +199,9 @@ const styles = StyleSheet.create({
     shadowRadius: 2.5,
     elevation: 3,
   },
-  productsText: {},
+  productsText: {
+    fontWeight: "bold"
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsContainer);

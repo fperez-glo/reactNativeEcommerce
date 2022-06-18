@@ -1,6 +1,6 @@
 
 // import 'dotenv/config';
-
+console.log("process.env.GOOGLE_CLOUD_PLATFORM_API_KEY:", process.env.GOOGLE_CLOUD_PLATFORM_API_KEY)
 export default {
   name: 'CoolApp',
   version: '1.0.0',

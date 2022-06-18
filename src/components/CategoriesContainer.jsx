@@ -16,9 +16,10 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-const CategoriesContainer = ({navigation, onPressCategory, categories, setSelectedCategory, selectedCategory, fetchCategories}) => {
+const CategoriesContainer = ({navigation, onPressCategory, setSelectedCategory, selectedCategory, fetchCategories}) => {
   const [ categoryInput, setCategoryInput ] = useState("");
-  const [ categoriesData, setCategoriesData] = useState(null);
+  const [ categoriesToRender, setCategoriesToRender] = useState([]);
+  const [ categoriesToFilter, setCategoriesToFilter] = useState([]);
   
 
   useEffect(() => {
@@ -27,11 +28,11 @@ const CategoriesContainer = ({navigation, onPressCategory, categories, setSelect
 
   const fetchCategoriesData = async () => {
     const dbCategories = await fetchCategories();
-    setCategoriesData(dbCategories.payload);
+    setCategoriesToRender(dbCategories.payload);
+    setCategoriesToFilter(dbCategories.payload);
   }
   
   const onPressHere =(item)=> {
-    
     setSelectedCategory(item.id)
     navigation.navigate("Products")
   }
@@ -47,13 +48,13 @@ const CategoriesContainer = ({navigation, onPressCategory, categories, setSelect
     );
   };
 
-  const searchCategory = (text) => {  
+  const searchCategory = async (text) => {  
     setCategoryInput(text);
-    if (text !== "" && categoriesData.length) {
-      const categoryFilter = categoriesData.filter(category => category.description.toLowerCase().search(text.toLowerCase()) !== -1)
-      setCategoriesData(categoryFilter)
-    } else {
-      setCategoriesData(categories);
+    if (text !== "") {
+      const categoryFilter = categoriesToFilter.filter(category => category.description.toLowerCase().search(text.toLowerCase()) !== -1)
+      setCategoriesToRender(categoryFilter)
+    } else if (text === "") {
+      setCategoriesToRender(categoriesToFilter);
     }
   }
 
@@ -62,11 +63,12 @@ const CategoriesContainer = ({navigation, onPressCategory, categories, setSelect
       <Searcher onChangeText={searchCategory} searchInputValue={categoryInput}></Searcher>
       <FlatList
         renderItem={renderCategories}
-        data={categoriesData}
+        data={categoriesToRender}
         keyExtractor={(category) => category.id}
-        horizontal
+        // horizontal={false}
+        numColumns= {2}
         // pagingEnabled={true}
-        showsHorizontalScrollIndicator={false}
+        // showsVerticalScrollIndicator={false}
       />
     </View>
   );
@@ -74,21 +76,24 @@ const CategoriesContainer = ({navigation, onPressCategory, categories, setSelect
 
 const styles = StyleSheet.create({
     container: {
-        // backgroundColor:"red",
-        width: "100%",
-        height:200
+        // backgroundColor: "red",
+        width: "95%",
+        height: "100%",
+        // justifyContent: "center",
+        alignItems: "center"
+        
     },
     categoriesButton:{
         backgroundColor: colors.lighGreen,
-        margin:5,
-        height:100,
-        width:100,
-        borderRadius:20,
-        padding:10,
-        justifyContent:"center",
-        alignItems:"center",
+        margin: 10,
+        height: 150,
+        width: 160,
+        borderRadius: 20,
+        padding: 10,
+        justifyContent: "center",
+        alignItems: "center",
         borderColor: colors.lightGrey,
-        borderWidth:0.3,
+        borderWidth: 0.3,
         shadowColor: "#000",
         shadowOffset: {
           width: 1.5,
@@ -99,7 +104,7 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     categoriesText:{
-        
+        fontWeight:"bold"
     }
 
 })

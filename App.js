@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar } from "react-native";
+import { StyleSheet, StatusBar, Dimensions, } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import MainNavigator from "./src/navigation";
 import { colors } from "./src/styles/globalColors";
@@ -20,6 +20,7 @@ const MainPersistedApp = () => {
 };
 
 export default function App() {
+
   // const clearAsyncStorage = async()=> {
   //   try {
   //     console.log(config.extra.cleanAsyncStorage)
@@ -29,7 +30,7 @@ export default function App() {
   //     console.log("error:", error)
   //   }
   // };
-  // config.extra.cleanAsyncStorage && clearAsyncStorage()
+  //  clearAsyncStorage()
   return (
     <Provider store={store}>
       <SafeAreaProvider style={styles.container}>
@@ -56,24 +57,30 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: colors.white,
+    marginTop: StatusBar.currentHeight,
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
   dropDownAlert: {
     padding: 9,
-    paddingTop: StatusBar.currentHeight,
+    // paddingTop: StatusBar.currentHeight,
     width: "95%",
     borderRadius: 25,
     marginLeft:10,
+    // Probar que onda esto en IOS
+    // marginTop: StatusBar.currentHeight,
     marginTop: 5,
+    //
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 3,
     },
-    shadowOpacity: 0.27,
+    shadowOpacity: 0.3,
     shadowRadius: 2.5,
-    elevation: 3,
+    elevation: 7,
   },
   view: {
     alignContent: 'flex-end',

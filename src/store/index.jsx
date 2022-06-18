@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import categoriesReducer from "../features/categories"
 import authReducer from "../features/auth"
 import cartReducer from "../features/cart"
+import deviceReducer from "../features/device"
 import locationReducer from "../features/configuration/locations"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer, persistStore } from "redux-persist"
@@ -15,7 +16,8 @@ const persistConfig = {
     auth: authReducer,
     categories: categoriesReducer,
     cart: cartReducer,
-    location: locationReducer
+    location: locationReducer,
+    device: deviceReducer,
   });
   
   const persistedReducer = persistReducer(persistConfig, reducers);
@@ -29,3 +31,4 @@ const persistConfig = {
   const persistor = persistStore(store);
 
   export { store, persistor };
+  
