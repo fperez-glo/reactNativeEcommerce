@@ -13,10 +13,9 @@ import config from "../config/aplication.config";
 const LocationCard = ({
   image = config.extra.defaultLocationImage,
   title = "Location Title",
+  handleLocationCardClick,
 }) => {
-  const handleEditLocation = () => {
-    console.log("Navegar a una screen para editar la direccion");
-  };
+  
 
   const handleEditPicture = () => {
     console.log("Navegar a una screen para editar la foto");
@@ -34,7 +33,7 @@ const LocationCard = ({
       </View>
       <TouchableOpacity
         style={styles.locationButton}
-        onPress={() => handleEditLocation()}
+        onPress={handleLocationCardClick}
       >
         <Text style={styles.title}>{title}</Text>
         <AntDesign name="right" size={26} />

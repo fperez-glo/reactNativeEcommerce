@@ -20,6 +20,7 @@
     "babel-plugin-inline-dotenv": "1.7.0",
     "expo": "~44.0.0",
     "expo-location": "~14.0.1",
+    "expo-sqlite": "^10.2.0",
     "expo-status-bar": "~1.2.0",
     "i": "0.3.7",
     "npm": "8.12.1",

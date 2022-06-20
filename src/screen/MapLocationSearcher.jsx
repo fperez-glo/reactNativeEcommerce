@@ -21,19 +21,20 @@ import { showInfo } from "../utils/MessageBar";
 import axios from "axios";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { connect } from "react-redux";
-import { addLocation } from "../features/configuration/locations";
+import { addLocation, addDBLocation } from "../features/configuration/locations";
 import MapView from "react-native-maps"
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       addLocation,
+      addDBLocation,
     },
     dispatch
   );
 };
 
-const MapLocationSearcher = ({ navigation, addLocation }) => {
+const MapLocationSearcher = ({ navigation, addLocation, addDBLocation }) => {
   const [location, setLocation] = useState(undefined);
   const [staticMap, setStaticMap] = useState(undefined);
   const [geoCodeAdress, setGeoCodeAdress] = useState(undefined);
@@ -119,15 +120,22 @@ const MapLocationSearcher = ({ navigation, addLocation }) => {
     return autoCompleteUrl;
   }
 
-  const handleConfirmLocation = () => {
-    const adress = geoCodeAdress.split(",");
-    const location = {
-      street: adress[0],
-      country:adress[2],
-      cp: adress[1]
+  const handleConfirmLocation = async () => {
+    try {
+      const adress = geoCodeAdress.split(",");
+      const location = {
+        id: Date.now(),
+        street: adress[0],
+        country:adress[2],
+        cp: adress[1]
+      }
+      const result = await addDBLocation(location);
+      console.log("results!!!:", result)
+      addLocation(location);
+      navigation.goBack()  
+    } catch (error) {
+      console.log("error al confirmar direccion:", error);
     }
-    addLocation(location);
-    navigation.goBack()
   }
 
   const handleSelectLocation = async(item) => {

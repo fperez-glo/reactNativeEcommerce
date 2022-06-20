@@ -8,8 +8,16 @@ import { PersistGate } from "redux-persist/integration/react";
 import DropdownAlert from "react-native-dropdownalert";
 import AlertHelper from "./src/utils/AlertHelper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { showError, showInfo } from "./src/utils/MessageBar";
+import { showInfo } from "./src/utils/MessageBar";
 import config from "./src/config/aplication.config"
+import { init } from "./src/database";
+
+// INICIALIZO LA BASE DE DATOS LOCAL DE SQLITE.
+init()
+  .then()
+  .catch((error) => {
+    console.log(error);
+  })
 
 const MainPersistedApp = () => {
   return (
@@ -20,16 +28,16 @@ const MainPersistedApp = () => {
 };
 
 export default function App() {
-  // const clearAsyncStorage = async()=> {
-  //   try {
-  //     console.log(config.extra.cleanAsyncStorage)
-  //     await AsyncStorage.clear()
-  //     showInfo({message:"AsyncStorage vaciado"})
-  //   } catch (error) {
-  //     console.log("error:", error)
-  //   }
-  // };
-  // config.extra.cleanAsyncStorage && clearAsyncStorage()
+  const clearAsyncStorage = async()=> {
+    try {
+      console.log(config.extra.cleanAsyncStorage)
+      await AsyncStorage.clear()
+      showInfo({message:"AsyncStorage vaciado"})
+    } catch (error) {
+      console.log("error:", error)
+    }
+  };
+  // clearAsyncStorage()r
   return (
     <Provider store={store}>
       <SafeAreaProvider style={styles.container}>
