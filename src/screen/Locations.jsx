@@ -88,7 +88,7 @@ const Locations = ({
           </TouchableOpacity>
         </View>
       </View>
-      {!renderedLocations.length && 
+      {!renderedLocations?.length && 
       <Text style={styles.noDataText}>No hay direcciones registradas aun</Text>
       }
       {loading ? (
