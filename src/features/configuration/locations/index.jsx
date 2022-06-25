@@ -44,8 +44,8 @@ export const selectDBLocations = createAsyncThunk(
       const results = await selectAdresses();
       return results.rows?._array;
     } catch (error) {
-      console.log("Insert Error:", error);
-      return asyncThunk.rejectWithValue(`Error en DB insert: ${error}`);
+      console.log("Select Error:", error);
+      return asyncThunk.rejectWithValue(`Error en DB Select: ${error}`);
     }
   }
 );
@@ -58,8 +58,8 @@ export const deleteDBLocation = createAsyncThunk(
       await deleteAdress(locationId);
       return true;
     } catch (error) {
-      console.log("Insert Error:", error);
-      return asyncThunk.rejectWithValue(`Error en DB insert: ${error}`);
+      console.log("Delete Error:", error);
+      return asyncThunk.rejectWithValue(`Error en DB Delete: ${error}`);
     }
   }
 );
@@ -69,6 +69,7 @@ export const locationSlice = createSlice({
   initialState,
   reducers: {
     addLocation: (state, action) => {
+      console.log("action.payload:",action.payload)
       state.locations.push(action.payload);
     },
   },

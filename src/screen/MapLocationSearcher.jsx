@@ -25,16 +25,16 @@ import { showInfo } from "../utils/MessageBar";
 import axios from "axios";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { connect } from "react-redux";
-import { addLocation } from "../features/configuration/locations";
 import { colors } from "../styles/globalColors";
 import { selectDeviceWidth, selectDeviceHeight } from "../store/selectors"
+import { addLocation, addDBLocation } from "../features/configuration/locations";
+import MapView from "react-native-maps"
 
 const mapStateToProps = (state) => ({
   deviceWidth: selectDeviceWidth(state),
   deviceHeight: selectDeviceHeight(state),
 });
-import { addLocation, addDBLocation } from "../features/configuration/locations";
-import MapView from "react-native-maps"
+
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
@@ -138,6 +138,7 @@ const MapLocationSearcher = ({ navigation, addLocation, deviceWidth, deviceHeigh
     return autoCompleteUrl;
   };
 
+  
   const handleConfirmLocation = async () => {
     try {
       const adress = geoCodeAdress.split(",");
@@ -148,7 +149,6 @@ const MapLocationSearcher = ({ navigation, addLocation, deviceWidth, deviceHeigh
         cp: adress[1]
       }
       const result = await addDBLocation(location);
-      console.log("results!!!:", result)
       addLocation(location);
       navigation.goBack()  
     } catch (error) {
@@ -249,7 +249,7 @@ const MapLocationSearcher = ({ navigation, addLocation, deviceWidth, deviceHeigh
             placeholder="Direccion"
           />
           
-          {console.log("deviceDimensions:",{deviceWidth, deviceHeight})}
+          {/* {console.log("deviceDimensions:",{deviceWidth, deviceHeight})} */}
           {dropDownData.length ? (
             // Meti este flatlist para utilizarlo como un dropDown asi a lo bestia pero funciona.
             <FlatList

@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import categoriesReducer from "../features/categories"
+import productsReducer from "../features/products"
 import authReducer from "../features/auth"
 import cartReducer from "../features/cart"
 import deviceReducer from "../features/device"
@@ -18,6 +19,7 @@ const persistConfig = {
     cart: cartReducer,
     location: locationReducer,
     device: deviceReducer,
+    products: productsReducer,
   });
   
   const persistedReducer = persistReducer(persistConfig, reducers);

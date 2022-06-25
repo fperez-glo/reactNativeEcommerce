@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, Dimensions, } from "react-native";
+import { StyleSheet, StatusBar, Dimensions, Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import MainNavigator from "./src/navigation";
 import { colors } from "./src/styles/globalColors";
@@ -11,6 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { showInfo } from "./src/utils/MessageBar";
 import config from "./src/config/aplication.config"
 import { init } from "./src/database";
+import Constants from 'expo-constants';
 
 // INICIALIZO LA BASE DE DATOS LOCAL DE SQLITE.
 init()
@@ -40,12 +41,14 @@ export default function App() {
   // clearAsyncStorage()r
   return (
     <Provider store={store}>
-      <SafeAreaProvider style={styles.container}>
+      <SafeAreaProvider style={Platform.OS === "ios" ? styles.iosContainer : styles.androidContainer}>
         <MainPersistedApp />
         <DropdownAlert
           defaultContainer={styles.dropDownAlert}
           ref={(ref) => AlertHelper.setDropDown(ref)}
           onClose={() => AlertHelper.invokeOnClose()}
+          // closeInterval= {100}
+          // showCancel
         />
       </SafeAreaProvider>
     </Provider>
@@ -63,8 +66,13 @@ export default function App() {
 // }
 
 const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
+  iosContainer: {
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: colors.white,
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+  },
+  androidContainer: {
     backgroundColor: colors.white,
     marginTop: StatusBar.currentHeight,
     width: Dimensions.get("window").width,

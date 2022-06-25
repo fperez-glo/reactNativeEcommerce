@@ -1,0 +1,52 @@
+[
+    {
+      "id": 1,
+      "categoryId": 2,
+      "title": "GTX 1070TI"
+    },
+    {
+      "id": 2,
+      "categoryId": 3,
+      "title": "Seasonic 500W"
+    },
+    {
+      "id": 3,
+      "categoryId": 1,
+      "title": "Intel i7 7700k"
+    },
+    {
+      "id": 4,
+      "categoryId": 1,
+      "title": "Amd Ryzen 5 3600x"
+    },
+    {
+      "id": 5,
+      "categoryId": 4,
+      "title": "WD Blue 1TB"
+    },
+    {
+      "id": 6,
+      "categoryId": 1,
+      "title": "Amd Ryzen 5 5600x"
+    },
+    {
+      "id": 7,
+      "categoryId": 1,
+      "title": "Amd Ryzen 5 3600"
+    },
+    {
+      "id": 8,
+      "categoryId": 4,
+      "title": "WD Black 1TB"
+    },
+    {
+      "id": 9,
+      "categoryId": 4,
+      "title": "WD Blue 500GB"
+    },
+    {
+      "id": 10,
+      "categoryId": 1,
+      "title": "Intel I5 7400F"
+    }
+]

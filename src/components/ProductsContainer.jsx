@@ -90,8 +90,15 @@ const ProductsContainer = ({
   ];
 
   useEffect(() => {
-    setProductsData(products);
+
+    fetchProductsByCategory()
+    
   }, []);
+
+  const fetchProductsByCategory = () => {
+    const productsByCategory = products.filter(product => product.categoryId === selectedCategoryId);
+    setProductsData(productsByCategory);
+  }
 
   const onPressProduct = async (product) => {
     addCartProduct(product);
@@ -99,7 +106,7 @@ const ProductsContainer = ({
   };
 
   const renderProducts = ({ item }) => {
-    return item.categoryId === selectedCategoryId ? (
+    return  (
       <View>
         <TouchableOpacity
           style={styles.productsButton}
@@ -108,7 +115,7 @@ const ProductsContainer = ({
           <Text style={styles.productsText}>{item.title}</Text>
         </TouchableOpacity>
       </View>
-    ) : null;
+    )
   };
 
   const [productInput, setProductInput] = useState("");
@@ -135,13 +142,13 @@ const ProductsContainer = ({
       <Searcher
         onChangeText={searchProduct}
         searchInputValue={productInput}
-      ></Searcher>
+      />
       <FlatList
         renderItem={renderProducts}
         data={productsData}
         keyExtractor={(product) => product.id}
-        // horizontal
-        pagingEnabled={true}
+        // vertical
+        // pagingEnabled={true}
         numColumns={2}
         showsVerticalScrollIndicator={false}
       />
@@ -154,12 +161,9 @@ const ProductsContainer = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:"red",
     width: "100%",
     height: "100%",
     alignItems: "center",
-    // padding: 5,
-    // marginTop: 42,
   },
   productsButton: {
     backgroundColor: colors.lighGreen,
@@ -167,7 +171,7 @@ const styles = StyleSheet.create({
     height: 150,
     width: 150,
     borderRadius: 20,
-    // padding: 10,
+    padding: 10,
     justifyContent: "center",
     alignItems: "center",
     borderColor: colors.lightGrey,

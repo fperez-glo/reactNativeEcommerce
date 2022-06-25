@@ -9,6 +9,13 @@ export default class AlertHelper {
   
     static show(type, title, message) {
       if (this.dropDown) {
+        if(this.dropDown.state.isOpen) {
+          setTimeout(()=> {
+            this.dropDown.close();
+            this.dropDown.alertWithType(type, title, message);
+          }, 500)
+          return
+        }
         this.dropDown.alertWithType(type, title, message);
       }
     }
