@@ -33,17 +33,20 @@ const mapStateToProps = (state) => ({
   deviceWidth: selectDeviceWidth(state),
   deviceHeight: selectDeviceHeight(state),
 });
+import { addLocation, addDBLocation } from "../features/configuration/locations";
+import MapView from "react-native-maps"
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       addLocation,
+      addDBLocation,
     },
     dispatch
   );
 };
 
-const MapLocationSearcher = ({ navigation, addLocation, deviceWidth, deviceHeight }) => {
+const MapLocationSearcher = ({ navigation, addLocation, deviceWidth, deviceHeight, addDBLocation }) => {
   const [location, setLocation] = useState(undefined);
   const [staticMap, setStaticMap] = useState(undefined);
   const [geoCodeAdress, setGeoCodeAdress] = useState(undefined);
@@ -135,16 +138,23 @@ const MapLocationSearcher = ({ navigation, addLocation, deviceWidth, deviceHeigh
     return autoCompleteUrl;
   };
 
-  const handleConfirmLocation = () => {
-    const adress = geoCodeAdress.split(",");
-    const location = {
-      street: adress[0],
-      country: adress[2],
-      cp: adress[1],
-    };
-    addLocation(location);
-    navigation.goBack();
-  };
+  const handleConfirmLocation = async () => {
+    try {
+      const adress = geoCodeAdress.split(",");
+      const location = {
+        id: Date.now(),
+        street: adress[0],
+        country:adress[2],
+        cp: adress[1]
+      }
+      const result = await addDBLocation(location);
+      console.log("results!!!:", result)
+      addLocation(location);
+      navigation.goBack()  
+    } catch (error) {
+      console.log("error al confirmar direccion:", error);
+    }
+  }
 
   const handleSelectLocation = async (item) => {
     let newDropDownData = [];
