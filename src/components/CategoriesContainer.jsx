@@ -1,10 +1,16 @@
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { useState, useEffect } from "react";
-import { FlatList, Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { FlatList, Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { connect } from "react-redux";
 import { colors } from "../styles/globalColors";
 import Searcher from "./Searcher";
 import { fetchCategories, setSelectedCategory } from "../features/categories";
+import videoImage from  "../assets/categories/video.png"
+import fuentesImage from  "../assets/categories/fuentes.png"
+import procesadorImage from  "../assets/categories/procesador.png"
+import almacenamientoImage from  "../assets/categories/almacenamiento.png"
+import noImage from  "../assets/categories/noImage.png"
+import ButtonItem from "./ButtonItem";
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
@@ -39,12 +45,26 @@ const CategoriesContainer = ({navigation, onPressCategory, setSelectedCategory, 
 
 
   const renderCategories = ({ item }) => {
+    let imageLogo;
+    switch (item.id) {
+      case 1:
+        imageLogo = procesadorImage;
+        break;
+      case 2:
+        imageLogo = videoImage;
+        break;
+      case 3:
+        imageLogo = fuentesImage;
+        break;
+      case 4:
+        imageLogo = almacenamientoImage;
+        break;
+      default:
+        imageLogo = noImage;
+        break;
+    }
     return (
-        <View>
-          <TouchableOpacity style={styles.categoriesButton} onPress={() => onPressCategory(item)}>
-            <Text style={styles.categoriesText}>{item.description}</Text>
-          </TouchableOpacity>
-        </View>
+        <ButtonItem backgroundImage={imageLogo} onPress={() => onPressCategory(item)} buttonItemText={item.description}/>
     );
   };
 
@@ -84,12 +104,13 @@ const styles = StyleSheet.create({
         
     },
     categoriesButton:{
-        backgroundColor: colors.lighGreen,
-        margin: 10,
+        backgroundColor: "#000",
+        // backfaceVisibility:"visible",
+        // margin: 10,
         height: 150,
         width: 160,
         borderRadius: 20,
-        padding: 10,
+        // padding: 10,
         justifyContent: "center",
         alignItems: "center",
         borderColor: colors.lightGrey,
@@ -104,7 +125,21 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     categoriesText:{
-        fontWeight:"bold"
+        fontWeight:"bold",
+        // color: colors.lighGreen,
+        // paddingVertical: 3
+
+    },
+    categoryImage: {
+      width:"100%",
+      height:"100%",
+
+      // backgroundColor:"blue",
+      borderRadius: 20,
+    },
+    categoriesButtonsContainer: {
+      alignItems: "center",
+      margin:8
     }
 
 })

@@ -13,6 +13,9 @@ import Searcher from "./Searcher";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { showSuccess } from "../utils/MessageBar";
 import { selectSelectedCategory } from "../store/selectors";
+import ButtonItem from "./ButtonItem";
+import { AntDesign } from "@expo/vector-icons";
+import Counter from "./Counter";
 
 const mapStateToProps = (state) => ({
   selectedCategoryId: selectSelectedCategory(state),
@@ -35,6 +38,14 @@ const ProductsContainer = ({
   navigation,
 }) => {
   const [productsData, setProductsData] = useState(null);
+  const [productInput, setProductInput] = useState("");
+  const [onLongPressProductOptions, setOnLongPressProductOptions] = useState(false);
+
+  useEffect(() => {
+
+    fetchProductsByCategory()
+    
+  }, []);
 
   const products = [
     {
@@ -89,11 +100,7 @@ const ProductsContainer = ({
     },
   ];
 
-  useEffect(() => {
-
-    fetchProductsByCategory()
-    
-  }, []);
+ 
 
   const fetchProductsByCategory = () => {
     const productsByCategory = products.filter(product => product.categoryId === selectedCategoryId);
@@ -101,24 +108,33 @@ const ProductsContainer = ({
   }
 
   const onPressProduct = async (product) => {
+    console.log("apreto el boton")
     addCartProduct(product);
     showSuccess({ message: "Producto agregado al carrito." });
   };
 
-  const renderProducts = ({ item }) => {
-    return  (
-      <View>
-        <TouchableOpacity
-          style={styles.productsButton}
-          onPress={() => onPressProduct(item)}
-        >
-          <Text style={styles.productsText}>{item.title}</Text>
+  const renderProductCartOptionsOnLongPress = () =>{
+    return (
+      <View style={styles.productCartOptionsContainer}>
+        <View>
+        <TouchableOpacity>
+          <AntDesign name="shoppingcart" size={28} color={"#FFF"}/>
         </TouchableOpacity>
       </View>
+      <View>
+      <Counter></Counter>
+    </View>
+      </View>
+      
+      
+    )
+  }
+
+  const renderProducts = ({ item }) => {
+    return  (
+      <ButtonItem  onPress={() => onPressProduct(item)} buttonItemText={item.title} renderOnLongPress={()=> renderProductCartOptionsOnLongPress()} />  
     )
   };
-
-  const [productInput, setProductInput] = useState("");
 
   const searchProduct = (text) => {
     setProductInput(text);
@@ -206,6 +222,13 @@ const styles = StyleSheet.create({
   productsText: {
     fontWeight: "bold"
   },
+  productCartOptionsContainer:{
+    position: "absolute",
+    top: "45%",
+    zIndex:1,
+    // flexDirection:"row"
+    backgroundColor:"red"
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsContainer);
