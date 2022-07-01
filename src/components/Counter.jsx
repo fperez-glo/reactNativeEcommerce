@@ -2,28 +2,29 @@ import { useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { colors } from "../styles/globalColors";
 
-const Counter = () => {
+const Counter = ({ maxCount }) => {
   const [counter, setCounter] = useState(1);
 
-    const add = () => {
-        console.log("counter:",counter)
-        setCounter(counter+1)
+  const add = () => {
+    if (maxCount) {
+      maxCount > counter && setCounter(counter + 1);
+      return;
     }
 
-    const subtract = () => {
-       counter > 1 && setCounter(counter-1)
-    }
+    setCounter(counter + 1);
+  };
+
+  const subtract = () => {
+    counter > 1 && setCounter(counter - 1);
+  };
 
   return (
     <View style={styles.container}>
-     
-     <TouchableOpacity style={styles.button} onPress={()=> subtract()}>
+      <TouchableOpacity style={styles.button} onPress={() => subtract()}>
         <Text style={styles.addSubtractText}>-</Text>
       </TouchableOpacity>
-      <Text>{counter}</Text>
-
-      
-      <TouchableOpacity style={styles.button} onPress={()=> add()}>
+      <Text style={styles.textCounter}>{counter}</Text>
+      <TouchableOpacity style={styles.button} onPress={() => add()}>
         <Text style={styles.addSubtractText}>+</Text>
       </TouchableOpacity>
     </View>
@@ -33,21 +34,29 @@ const Counter = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    backgroundColor: colors.lightGrey,
-    opacity: 0.6,
-    borderRadius: 25,
-    justifyContent:"space-between",
-    padding: 4
+    backgroundColor: colors.lighGreen,
+    // opacity: 0.8,
+    borderRadius: 10,
+    justifyContent: "space-between",
+    padding: 4,
+    alignItems: "center",
   },
   addSubtractText: {
     fontWeight: "bold",
-    padding:4
+    padding: 5,
+    fontSize: 14,
   },
-  button:{
-    width:"30%",
-    backgroundColor:colors.lighGreen,
-    borderRadius: 100
-  }
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "30%",
+    backgroundColor: colors.boldGreen,
+    borderRadius: 5,
+  },
+  textCounter: {
+    fontWeight: "bold",
+    fontSize: 15,
+  },
 });
 
 export default Counter;

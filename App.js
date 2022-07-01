@@ -38,7 +38,7 @@ export default function App() {
       console.log("error:", error)
     }
   };
-  // clearAsyncStorage()r
+  // clearAsyncStorage();
   return (
     <Provider store={store}>
       <SafeAreaProvider style={Platform.OS === "ios" ? styles.iosContainer : styles.androidContainer}>

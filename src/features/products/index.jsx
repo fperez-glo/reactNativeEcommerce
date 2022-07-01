@@ -4,7 +4,7 @@ import config from "../../config/aplication.config"
 
 const initialState = {
     data: [],
-    // selectedCategory: null,
+    selectedProduct: null,
     loading: false,
     error: false,
 }
@@ -21,16 +21,17 @@ export const productsSlice = createSlice({
     name: "products",
     initialState,
     reducers: {
-      setSelectedCategory: (state, action) => {
-        const categorySelected = state.data.find(category => category.id === action.payload)
-        state.selectedCategory = categorySelected.id;
-      }
+      setSelectedProduct: (state, action) => {
+        const productSelected = state.data.find(product => product.id === action.payload);
+        state.selectedProduct = productSelected;
+      },
     },
     extraReducers: {
       [fetchProducts.pending]: (state) => {
         state.loading = true
       },
       [fetchProducts.fulfilled]: (state, {payload}) => {
+        // Lleno la propertie data del state.
         state.data = payload
         state.loading = false
       },
@@ -41,5 +42,5 @@ export const productsSlice = createSlice({
     }
 })
 
-export const  { setSelectedCategory } = productsSlice.actions;
+export const  { setSelectedProduct } = productsSlice.actions;
 export default productsSlice.reducer;

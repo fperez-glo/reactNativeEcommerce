@@ -1,52 +1,82 @@
 [
-    {
-      "id": 1,
-      "categoryId": 2,
-      "title": "GTX 1070TI"
-    },
-    {
-      "id": 2,
-      "categoryId": 3,
-      "title": "Seasonic 500W"
-    },
-    {
-      "id": 3,
-      "categoryId": 1,
-      "title": "Intel i7 7700k"
-    },
-    {
-      "id": 4,
-      "categoryId": 1,
-      "title": "Amd Ryzen 5 3600x"
-    },
-    {
-      "id": 5,
-      "categoryId": 4,
-      "title": "WD Blue 1TB"
-    },
-    {
-      "id": 6,
-      "categoryId": 1,
-      "title": "Amd Ryzen 5 5600x"
-    },
-    {
-      "id": 7,
-      "categoryId": 1,
-      "title": "Amd Ryzen 5 3600"
-    },
-    {
-      "id": 8,
-      "categoryId": 4,
-      "title": "WD Black 1TB"
-    },
-    {
-      "id": 9,
-      "categoryId": 4,
-      "title": "WD Blue 500GB"
-    },
-    {
-      "id": 10,
-      "categoryId": 1,
-      "title": "Intel I5 7400F"
-    }
+  {
+    "id": 1,
+    "categoryId": 2,
+    "title": "GTX 1070TI",
+    "stock": 3,
+    "price": 47999,
+    "localAssetName": "gtx1070ti"
+  },
+  {
+    "id": 2,
+    "categoryId": 3,
+    "title": "Seasonic 500W",
+    "stock": 9,
+    "price": 24984,
+    "localAssetName": "seasonic500"
+  },
+  {
+    "id": 3,
+    "categoryId": 1,
+    "title": "Intel i7 7700k",
+    "stock": 6,
+    "price": 58984,
+    "localAssetName": "i77700K"
+  },
+  {
+    "id": 4,
+    "categoryId": 1,
+    "title": "Amd Ryzen 5 3600x",
+    "stock": 5,
+    "price": 36366,
+    "localAssetName": "ryzen3600"
+  },
+  {
+    "id": 5,
+    "categoryId": 4,
+    "title": "WD Blue 1TB",
+    "stock": 38,
+    "price": 8982,
+    "localAssetName": "wdBlue1tb"
+  },
+  {
+    "id": 6,
+    "categoryId": 1,
+    "title": "Amd Ryzen 5 5600x",
+    "stock": 4,
+    "price": 46288,
+    "localAssetName": "ryzen5000"
+  },
+  {
+    "id": 7,
+    "categoryId": 1,
+    "title": "Amd Ryzen 5 3600",
+    "stock": 8,
+    "price": 35889,
+    "localAssetName": "ryzen3600"
+  },
+  {
+    "id": 8,
+    "categoryId": 4,
+    "title": "WD Black 1TB",
+    "stock": 12,
+    "price": 12759,
+    "localAssetName": "wdBlack1tb"
+  },
+  {
+    "id": 9,
+    "categoryId": 4,
+    "title": "WD Blue 500GB",
+    "stock": 23,
+    "price": 5987,
+    "localAssetName": "wdBlue500gb"
+  },
+  {
+    "id": 10,
+    "categoryId": 1,
+    "title": "Intel I5 7400F",
+    "stock": 2,
+    "price": 35678,
+    "localAssetName": "i57400F"
+  }
 ]

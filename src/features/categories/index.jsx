@@ -31,6 +31,7 @@ export const categoriesSlice = createSlice({
         state.loading = true
       },
       [fetchCategories.fulfilled]: (state, {payload}) => {
+        // Lleno la propertie data del state.
         state.data = payload
         state.loading = false
       },

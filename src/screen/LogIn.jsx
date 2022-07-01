@@ -54,6 +54,7 @@ const LogIn = ({ setUser }) => {
         placeholder={"Password"}
         value={passwordInput}
         onChangeText={setPasswordInput}
+        secureTextEntry12
       />
       <Button
         loading={loading}

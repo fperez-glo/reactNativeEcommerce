@@ -37,12 +37,6 @@ const CategoriesContainer = ({navigation, onPressCategory, setSelectedCategory, 
     setCategoriesToRender(dbCategories.payload);
     setCategoriesToFilter(dbCategories.payload);
   }
-  
-  const onPressHere =(item)=> {
-    setSelectedCategory(item.id)
-    navigation.navigate("Products")
-  }
-
 
   const renderCategories = ({ item }) => {
     let imageLogo;
