@@ -7,7 +7,7 @@ const CartItemCard = ({item, onPressTrash}) => {
   return (
     <View style={styles.card}>
       <View style={styles.qtyContainer}>
-        <Text style={styles.productsText}>({item.stock})</Text>
+        <Text style={styles.productsText}>({item.productQty})</Text>
       </View>
       <View style={styles.detailContainer}>
         <Text style={styles.productsText}>{item.title}</Text>

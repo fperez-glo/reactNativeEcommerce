@@ -11,19 +11,33 @@ const Button = ({
   style,
   loading = false,
 }) => {
+
+  const getWidth = (style) => {
+   console.log("entra a getwidth")
+    return buttonTitle.length > 10 ? buttonTitle.length * 9 : 100
+  }
+
   return (
-    <TouchableOpacity style={[styles.button, style]} onPress={() => onPress()}>
-      {loading ? <ActivityIndicator />
-      : <Text>{buttonTitle}</Text>}
+    <TouchableOpacity
+      style={[
+        styles.button,
+        style,
+        { maxWidth: style.width && getWidth(style) },
+      ]}
+      onPress={() => onPress()}
+    >
+      {loading ? <ActivityIndicator /> : <Text>{buttonTitle}</Text>}
     </TouchableOpacity>
-  )
+  );
 };
+
+
 
 const styles = StyleSheet.create({
   button: {
     backgroundColor: "lightblue",
-    width: 100,
     height: 40,
+    // marginHorizontal:5,
     borderRadius: 25,
     padding: 10,
     justifyContent: "center",

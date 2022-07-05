@@ -11,14 +11,24 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
       addCartProduct: (state, action) => {
-        state.cartProducts.push(action.payload);
+        let foundedInCart = false;
+        state.cartProducts.length && state.cartProducts.forEach(product => {
+          if(product.id === action.payload.id){
+            foundedInCart = true;
+            product.productQty += action.payload.productQty
+          }
+        })
+        !foundedInCart && state.cartProducts.push(action.payload);
       },
       deleteCartProduct: (state, action) => {
         const filter = state.cartProducts.filter(products => products.id != action.payload);
         state.cartProducts = filter;
+      },
+      cleanCart:(state)=> {
+        state.cartProducts = initialState.cartProducts;
       }
     },
 })
 
-export const  { addCartProduct, deleteCartProduct } = cartSlice.actions;
+export const  { addCartProduct, deleteCartProduct, cleanCart } = cartSlice.actions;
 export default cartSlice.reducer;

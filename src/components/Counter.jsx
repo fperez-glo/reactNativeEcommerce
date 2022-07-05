@@ -1,18 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { colors } from "../styles/globalColors";
 
-const Counter = ({ maxCount }) => {
+const Counter = ({ maxCount, whenTapMaxCount, onChange }) => {
   const [counter, setCounter] = useState(1);
+
+  useEffect(()=> {
+    onChange(counter);
+  }, [counter])
 
   const add = () => {
     if (maxCount) {
       maxCount > counter && setCounter(counter + 1);
+      maxCount === counter && whenTapMaxCount();
       return;
     }
 
     setCounter(counter + 1);
   };
+
+
 
   const subtract = () => {
     counter > 1 && setCounter(counter - 1);

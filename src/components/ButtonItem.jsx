@@ -20,14 +20,6 @@ const ButtonItem = ({
   onLongPressCallback = undefined,
 }) => {
   const [longPress, setLongPress] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(()=> {
-    console.log("aplica efecto")
-    setTimeout(()=>{
-      setLoading(false);
-    }, 250)
-  },[backgroundImage])
 
   const handleLongPress = async () => {
     setLongPress(true);
@@ -59,7 +51,7 @@ const ButtonItem = ({
       >
         {longPress && renderOnLongPress && renderOnLongPress()}
 
-        {loading ? (
+        {!backgroundImage ? (
           <ActivityIndicator size={"small"} color={colors.boldGreen} />
         ) : (
           <Image
@@ -107,6 +99,9 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     borderRadius: 20,
+    resizeMode:"stretch",
+    // resizeMode:"contain",
+    // resizeMode:"cover",
   },
   backgroundImageOptionsEnabled: {
     width: "100%",

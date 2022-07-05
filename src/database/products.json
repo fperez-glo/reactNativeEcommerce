@@ -3,6 +3,7 @@
     "id": 1,
     "categoryId": 2,
     "title": "GTX 1070TI",
+    "description": "",
     "stock": 3,
     "price": 47999,
     "localAssetName": "gtx1070ti"
@@ -11,6 +12,7 @@
     "id": 2,
     "categoryId": 3,
     "title": "Seasonic 500W",
+    "description": "SERIE A12\nLa serie A12 está disponible en el factor de forma ATX estándar y en potencias que son las más comunes para un sistema de PC. La serie Seasonic A12 alcanza el estándar 80 PLUS® 230V EU de proporcionar al menos 82%, 85% y 82% de eficiencia en el uso de energía al 20%, 50% y 100% de cargas operativas, respectivamente. Esta eficiencia, combinada con la corrección activa del factor de potencia, permite que las fuentes de alimentación de la serie A12 reduzcan el desperdicio de energía, lo que se traduce en ahorros en los costos de energía para sus usuarios. Además de ser muy eficientes, las unidades A12 utilizan el diseño de convertidor resonante LLC y el control de ventilador inteligente y silencioso (S2FC) líder en la industria.\nLa disponibilidad de la serie A12 depende de su área geográfica. Para obtener más información sobre la disponibilidad del producto, comuníquese con su representante local de Seasonic.",
     "stock": 9,
     "price": 24984,
     "localAssetName": "seasonic500"
@@ -19,6 +21,7 @@
     "id": 3,
     "categoryId": 1,
     "title": "Intel i7 7700k",
+    "description": "",
     "stock": 6,
     "price": 58984,
     "localAssetName": "i77700K"
@@ -27,6 +30,7 @@
     "id": 4,
     "categoryId": 1,
     "title": "Amd Ryzen 5 3600x",
+    "description": "",
     "stock": 5,
     "price": 36366,
     "localAssetName": "ryzen3600"
@@ -35,6 +39,7 @@
     "id": 5,
     "categoryId": 4,
     "title": "WD Blue 1TB",
+    "description": "",
     "stock": 38,
     "price": 8982,
     "localAssetName": "wdBlue1tb"
@@ -43,6 +48,7 @@
     "id": 6,
     "categoryId": 1,
     "title": "Amd Ryzen 5 5600x",
+    "description": "",
     "stock": 4,
     "price": 46288,
     "localAssetName": "ryzen5000"
@@ -51,6 +57,7 @@
     "id": 7,
     "categoryId": 1,
     "title": "Amd Ryzen 5 3600",
+    "description": "",
     "stock": 8,
     "price": 35889,
     "localAssetName": "ryzen3600"
@@ -59,6 +66,7 @@
     "id": 8,
     "categoryId": 4,
     "title": "WD Black 1TB",
+    "description": "",
     "stock": 12,
     "price": 12759,
     "localAssetName": "wdBlack1tb"
@@ -67,6 +75,7 @@
     "id": 9,
     "categoryId": 4,
     "title": "WD Blue 500GB",
+    "description": "",
     "stock": 23,
     "price": 5987,
     "localAssetName": "wdBlue500gb"
@@ -75,6 +84,7 @@
     "id": 10,
     "categoryId": 1,
     "title": "Intel I5 7400F",
+    "description": "",
     "stock": 2,
     "price": 35678,
     "localAssetName": "i57400F"

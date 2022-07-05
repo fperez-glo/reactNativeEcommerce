@@ -35,7 +35,7 @@ const MainNavigator = ({user, setDeviceWindowsDimensions}) => {
 
   return (
     <NavigationContainer>
-      {!user 
+      {user 
         ? <UserNotLoggedTabNavigation/>
         : <UserLoggedTabNavigation/>}
     </NavigationContainer>

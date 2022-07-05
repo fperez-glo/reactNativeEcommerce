@@ -14,9 +14,14 @@ export const assetsSlice = createSlice({
     initialState,
     reducers: {
       setGlobalAplicationProductsAssets: (state, action) => {
-        let concatArray = [];
-        concatArray = concatArray.concat(action.payload);
-        state.globalAplicationAssets.productsAssets = concatArray;
+        if (state.globalAplicationAssets.productsAssets?.length !== action.payload?.length){
+          state.globalAplicationAssets.productsAssets = [];
+          let concatArray = [];
+          concatArray = concatArray.concat(action.payload);
+          concatArray.forEach(productAsset => {
+            state.globalAplicationAssets.productsAssets.push({assetName: productAsset?.name, uri: productAsset?.uri})
+          })
+        }
       }
     },
 })

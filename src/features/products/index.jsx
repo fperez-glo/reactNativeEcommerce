@@ -25,6 +25,11 @@ export const productsSlice = createSlice({
         const productSelected = state.data.find(product => product.id === action.payload);
         state.selectedProduct = productSelected;
       },
+      selectedProductAddPropertie: (state, action) => {
+        console.log("action.payload:", action.payload)
+        state.selectedProduct[action.payload?.propertieName] = action.payload?.data;
+        console.log("state.selectedProduct:", state.selectedProduct)
+      }
     },
     extraReducers: {
       [fetchProducts.pending]: (state) => {
@@ -42,5 +47,5 @@ export const productsSlice = createSlice({
     }
 })
 
-export const  { setSelectedProduct } = productsSlice.actions;
+export const  { setSelectedProduct, selectedProductAddPropertie } = productsSlice.actions;
 export default productsSlice.reducer;

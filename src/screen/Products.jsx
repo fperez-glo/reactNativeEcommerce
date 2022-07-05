@@ -7,7 +7,6 @@ import {
   Text,
 } from "react-native";
 import { connect } from "react-redux";
-import { addCartProduct } from "../features/cart";
 import { colors } from "../styles/globalColors";
 import Searcher from "../components/Searcher";
 import { bindActionCreators } from "@reduxjs/toolkit";
@@ -17,7 +16,7 @@ import ButtonItem from "../components/ButtonItem";
 import { AntDesign } from "@expo/vector-icons";
 import Counter from "../components/Counter";
 import Button from "../components/Button";
-import { fetchProducts, setSelectedProduct } from "../features/products";
+import { fetchProducts, selectedProductAddPropertie, setSelectedProduct } from "../features/products";
 
 const mapStateToProps = (state) => ({
   selectedCategoryId: selectSelectedCategory(state),
@@ -27,8 +26,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
-      addCartProduct,
       setSelectedProduct,
+      selectedProductAddPropertie,
       fetchProducts,
     },
     dispatch
@@ -39,10 +38,10 @@ const Products = ({
   selectedProductAssets,
   selectedCategoryId,
   setSelectedProduct,
+  selectedProductAddPropertie,
   fetchProducts,
   // onPressProduct,
   // onPressHandleBack,
-  addCartProduct,
   navigation,
 }) => {
   const [productsToRender, setProductsToRender] = useState([]);
@@ -66,6 +65,7 @@ const Products = ({
 
   const onPressProduct = async (product) => {
     setSelectedProduct(product.id);
+    selectedProductAddPropertie({propertieName: "asset",data: getProductAsset(product.localAssetName)});
     navigation.navigate("ProductDetail");
     // console.log("apreto el boton", product);
     // addCartProduct(product);
@@ -89,23 +89,24 @@ const Products = ({
   };
 
   const renderProducts = ({ item }) => {
-    const imageLogo = findProductAsset(item);
     return (
       <ButtonItem
         onPress={() => onPressProduct(item)}
         buttonItemText={item.title}
         renderOnLongPress={() => renderProductCartOptionsOnLongPress()}
         onLongPressCallback={() => setSelectedProductItem(item)}
-        backgroundImage={imageLogo}
+        backgroundImage={getProductAsset(item.localAssetName)}
+        // backgroundImage={{uri: "http://192.168.3.45:19000/assets/src/assets/products/wdBlue500gb.png?platform=ios&hash=a2dbedb83351e2ce747bc18f246e229f?platform=ios&dev=true&hot=false&strict=false&minify=false"}}
       />
     );
   };
 
-  const findProductAsset = (item) => {
+  const getProductAsset = (localAssetName) => {
     let assetToRender;
     for (let i = 0; i < selectedProductAssets.length; i++) {
       const asset = selectedProductAssets[i];
-      if (asset.name === item.localAssetName){
+      if (asset.assetName === localAssetName){
+        // setSelectedProduct(...{asset});
         assetToRender = asset;
         break;
       }

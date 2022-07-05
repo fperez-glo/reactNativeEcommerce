@@ -3076,10 +3076,10 @@
     "compare-versions" "^3.4.0"
     "invariant" "^2.2.4"
 
-"expo-sqlite@^10.2.0":
-  "integrity" "sha512-sG1YnGldQXAolCRyee3buQclKrHBt4oL7zklMoFspXDm8r/mHzbJ2SViZbM7Ws0xrimB45vR+mwcKsT6jU8AgQ=="
-  "resolved" "https://registry.npmjs.org/expo-sqlite/-/expo-sqlite-10.2.0.tgz"
-  "version" "10.2.0"
+"expo-sqlite@~10.1.0":
+  "integrity" "sha512-yxVa+sDWhfuvYN1MJkQZK74ND3mEOyVm6o2bRoecP6MDZW6c7NXS7Q7kP157b80h8meHukIfkhd48NAe1peenA=="
+  "resolved" "https://registry.npmjs.org/expo-sqlite/-/expo-sqlite-10.1.1.tgz"
+  "version" "10.1.1"
   dependencies:
     "@expo/websql" "^1.0.1"
 
