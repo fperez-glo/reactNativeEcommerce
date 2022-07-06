@@ -31,12 +31,7 @@
         "CAMERA",
         "ACCESS_FINE_LOCATION",
         "WRITE_EXTERNAL_STORAGE"
-      ],
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyAvBSp5AIi_hZUJfTNd2Ece26hrr37Wces"
-        }
-      }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -1,0 +1,6 @@
+FIREBASE_REALTIME_DB = "https://reactnativeecommerce-28244-default-rtdb.firebaseio.com/"
+FIREBASE_PROJECT_API_KEY = "AIzaSyC02Sm1vkqhcIdi6apoY8XXl7BztJswfhY"
+GOOGLE_CLOUD_PLATFORM_API_KEY = "AIzaSyAvBSp5AIi_hZUJfTNd2Ece26hrr37Wces"
+CLEAN_ASYNC_STORAGE = 0
+
+
