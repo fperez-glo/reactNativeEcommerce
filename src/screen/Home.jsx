@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import CategoriesContainer from "../components/CategoriesContainer";
 import { setSelectedCategory } from "../features/categories";
 import { setGlobalAplicationProductsAssets } from "../features/assets";
+import { colors } from "../styles/globalColors";
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
@@ -53,6 +54,7 @@ const Home = ({ navigation, setSelectedCategory, setGlobalAplicationProductsAsse
 const styles = StyleSheet.create({
   homeContainer: {
     // backgroundColor:"blue",
+    backgroundColor: colors.white,
     // flex:1,
     alignItems: "center",
     // height:"100%",

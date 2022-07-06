@@ -6,7 +6,7 @@ const Counter = ({ maxCount, whenTapMaxCount, onChange }) => {
   const [counter, setCounter] = useState(1);
 
   useEffect(()=> {
-    onChange(counter);
+    onChange && onChange(counter);
   }, [counter])
 
   const add = () => {

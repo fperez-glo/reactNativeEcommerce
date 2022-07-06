@@ -58,7 +58,6 @@ const Locations = ({
   };
 
   const renderLocations = ({ item }) => {
-    // console.log("item:", item)
     return (
       <LocationCard
         title={`${item.street}, ${item.cp}, ${item.country}`}
@@ -110,7 +109,8 @@ const Locations = ({
 
 const styles = StyleSheet.create({
   container: {
-    alignItems:"center"
+    alignItems:"center",
+    backgroundColor: colors.white
   },
   headerContainer: {
     justifyContent: "center",

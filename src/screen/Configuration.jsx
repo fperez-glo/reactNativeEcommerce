@@ -1,9 +1,10 @@
 import {StyleSheet,Text, TouchableOpacity, SafeAreaView} from "react-native"
 import { AntDesign } from '@expo/vector-icons';
+import { colors } from "../styles/globalColors";
 
 const Configuration = ({navigation}) => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor: colors.white, flex:1}}>
         <Text style={styles.title}>Configuracion</Text>
         <TouchableOpacity style={styles.listButton} onPress={()=> {navigation.navigate("Locations")}}>
             <Text style={styles.listItemsText}>Dirrecciones</Text>

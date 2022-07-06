@@ -11,3 +11,7 @@ export const showError = options => {
 export const showSuccess = options => {
   AlertHelper.show('success', '', options.message);
 };
+
+export const showOverlay = options => {
+  AlertHelper.showCustomAlert(options);
+}

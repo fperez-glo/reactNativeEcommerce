@@ -13,7 +13,6 @@ const Button = ({
 }) => {
 
   const getWidth = (style) => {
-   console.log("entra a getwidth")
     return buttonTitle.length > 10 ? buttonTitle.length * 9 : 100
   }
 
@@ -22,7 +21,7 @@ const Button = ({
       style={[
         styles.button,
         style,
-        { maxWidth: style.width && getWidth(style) },
+        { maxWidth: style?.width && getWidth(style) },
       ]}
       onPress={() => onPress()}
     >

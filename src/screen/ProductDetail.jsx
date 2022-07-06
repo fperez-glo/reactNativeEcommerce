@@ -1,23 +1,17 @@
 import React, { useState } from "react";
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  ScrollView,
-  SafeAreaView,
-} from "react-native";
+import { Text, View, StyleSheet, Image, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import Button from "../components/Button";
 import Counter from "../components/Counter";
-import { selectSelectedProduct } from "../store/selectors";
+import { selectDeviceHeight, selectSelectedProduct } from "../store/selectors";
 import { showInfo, showSuccess } from "../utils/MessageBar";
 import { addCartProduct } from "../features/cart";
 import { bindActionCreators } from "@reduxjs/toolkit";
+import { colors } from "../styles/globalColors";
 
 const mapStateToProps = (state) => ({
   selectedProductData: selectSelectedProduct(state),
+  deviceHeight: selectDeviceHeight(state),
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -29,29 +23,35 @@ const mapDispatchToProps = (dispatch) => {
   );
 };
 
-const ProductDetail = ({ navigation, selectedProductData, addCartProduct }) => {
+const ProductDetail = ({
+  navigation,
+  selectedProductData,
+  addCartProduct,
+  deviceHeight,
+}) => {
   const [productQty, setProductQty] = useState();
 
   const handleAddToCart = () => {
-    console.log("agrego al carrito;");
     const product = {
       id: selectedProductData.id,
       productQty,
       title: selectedProductData.title,
       price: selectedProductData.price,
+      asset: selectedProductData.asset,
     };
     addCartProduct(product);
     showSuccess({ message: "Producto agregado al carrito." });
-  }
+  };
 
   return (
     // <SafeAreaView style={{flex:1}}>
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: colors.white }}>
       <View style={styles.container}>
         <Image style={styles.image} source={selectedProductData.asset}></Image>
-
-        <Text style={styles.title}>{selectedProductData.title}</Text>
-        <Text>${selectedProductData.price}</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{selectedProductData.title}</Text>
+          <Text style={styles.priceText}>${selectedProductData.price}</Text>
+        </View>
         <View style={styles.addToCartContainer}>
           <Counter
             maxCount={selectedProductData.stock}
@@ -63,34 +63,27 @@ const ProductDetail = ({ navigation, selectedProductData, addCartProduct }) => {
           <Button
             buttonTitle="Agregar al carrito"
             style={styles.addToCartButton}
-            onPress={()=> handleAddToCart()}
+            onPress={() => handleAddToCart()}
           ></Button>
         </View>
-
         <View style={styles.descriptionContainer}>
           <Text>{selectedProductData.description}</Text>
         </View>
-
-        {/* <Text>{selectedProductData.description}</Text> */}
-
-        <TouchableOpacity
-          style={styles.button}
+        <Button
+          buttonTitle="Volver"
           onPress={() => navigation.goBack()}
-        >
-          <Text>Volver</Text>
-        </TouchableOpacity>
+          style={styles.backButton}
+        />
       </View>
     </ScrollView>
-    // </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: "100%",
-    width: "100%",
-    padding: 5,
-    backgroundColor: "red",
+    // height: Dimensions.get('window').height - ((Dimensions.get('window').height * 10)/100),
+    // width: "100%",
+    padding: 8,
   },
   image: {
     width: "100%",
@@ -99,15 +92,26 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     // marginHorizontal:5
   },
+  titleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   title: {
     fontSize: 25,
     fontWeight: "500",
+  },
+  priceText: {
+    fontSize: 20,
+    fontWeight: "500",
+    marginRight: 25,
   },
   addToCartContainer: {
     flexDirection: "row",
     // backgroundColor:"red",
     maxWidth: "90%",
     justifyContent: "flex-start",
+    marginTop: 10,
   },
   addToCartButton: {
     height: 35,
@@ -116,6 +120,9 @@ const styles = StyleSheet.create({
   descriptionContainer: {
     // backgroundColor:"red"
     marginTop: 5,
+  },
+  backButton: {
+    marginTop: 10,
   },
 });
 

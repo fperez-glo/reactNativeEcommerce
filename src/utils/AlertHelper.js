@@ -19,6 +19,23 @@ export default class AlertHelper {
         this.dropDown.alertWithType(type, title, message);
       }
     }
+
+    static setCustomDropDown(dropDown) {
+      this.customDropDown = dropDown;
+    }
+
+    static showCustomAlert(options){
+      if (this.customDropDown) {
+        if(this.customDropDown.state.isOpen) {
+          setTimeout(()=> {
+            this.customDropDown.close();
+            this.customDropDown.alertWithType(options.type);
+          }, 500)
+          return
+        }
+        this.customDropDown.alertWithType(options.type);
+      }
+    }
   
     static setOnClose(onClose) {
       this.onClose = onClose;

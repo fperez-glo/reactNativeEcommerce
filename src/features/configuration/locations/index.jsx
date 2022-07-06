@@ -17,12 +17,6 @@ export const addDBLocation = createAsyncThunk(
   "location/addDB",
   async (location, asyncThunk) => {
     try {
-      // console.log("location en async THUNK!:", {
-      //   id: location.id,
-      //   street: location.street.trim(),
-      //   cp: location.cp.trim(),
-      //   country: location.country.trim(),
-      // });
       await insertAdress(
         location.id,
         location.street.trim(),
@@ -69,7 +63,6 @@ export const locationSlice = createSlice({
   initialState,
   reducers: {
     addLocation: (state, action) => {
-      console.log("action.payload:",action.payload)
       state.locations.push(action.payload);
     },
   },

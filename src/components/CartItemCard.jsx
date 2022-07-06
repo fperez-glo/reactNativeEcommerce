@@ -1,11 +1,15 @@
 import { Entypo } from '@expo/vector-icons';
 import React from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, View, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { colors } from '../styles/globalColors';
 
 const CartItemCard = ({item, onPressTrash}) => {
   return (
     <View style={styles.card}>
+      <Image
+            style={styles.backgroundImageDefault}
+            source={item.asset}
+          ></Image>
       <View style={styles.qtyContainer}>
         <Text style={styles.productsText}>({item.productQty})</Text>
       </View>
@@ -14,7 +18,7 @@ const CartItemCard = ({item, onPressTrash}) => {
         <Text style={styles.productsText}>$ {item.price}</Text>
       </View>
       <View style={styles.buttonContainer}>
-      <TouchableOpacity onPress={() => onPressTrash()}>
+      <TouchableOpacity onPress={() => onPressTrash()} style={styles.trashButton}>
           <Entypo name="trash" size={24} color={"red"} />
         </TouchableOpacity>
       </View>
@@ -34,10 +38,9 @@ const styles = StyleSheet.create({
     // backgroundColor:"blue"
   },
   card: {
-    backgroundColor: colors.lighGreen,
-    marginTop: 5,
+    backgroundColor: "black",
+    marginTop: 2,
     borderRadius: 20,
-    padding: 8,
     height: 100,
     width: "100%",
     borderWidth: 1,
@@ -56,7 +59,20 @@ const styles = StyleSheet.create({
   },
   productsText: {
     fontSize: 20,
+    fontWeight:"bold",
+    color: colors.white
   },
+  backgroundImageDefault:{
+    width:"100%",
+    height:"100%",
+    position:"absolute",
+    opacity: .3,
+    resizeMode:"cover",
+    borderRadius: 20
+  },
+  trashButton: {
+    right: 20
+  }
 })
 
 export default CartItemCard

@@ -26,9 +26,7 @@ export const productsSlice = createSlice({
         state.selectedProduct = productSelected;
       },
       selectedProductAddPropertie: (state, action) => {
-        console.log("action.payload:", action.payload)
         state.selectedProduct[action.payload?.propertieName] = action.payload?.data;
-        console.log("state.selectedProduct:", state.selectedProduct)
       }
     },
     extraReducers: {

@@ -4,18 +4,19 @@ import CartNavigator from "../stacks/cart/index";
 import ConfigurationNavigator from "../stacks/configuration";
 import { StyleSheet } from "react-native";
 import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
+import { colors } from '../../styles/globalColors';
 
 const BottomTabs = createBottomTabNavigator();
 
 const UserLoggedTabNavigation = () => {
   return (
-    <BottomTabs.Navigator 
+    <BottomTabs.Navigator
       initialRouteName='ShopTab'
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: styles.tabBar,
-        tabBarActiveBackgroundColor:"lightgrey",
+        tabBarActiveBackgroundColor: colors.boldGreen,
         tabBarItemStyle: styles.buttons,
       }}>
         <BottomTabs.Screen
@@ -52,11 +53,19 @@ const UserLoggedTabNavigation = () => {
 const styles = StyleSheet.create({
   tabBar: {
     width: "90%",
-    // backgroundColor:"red",
+    backgroundColor: colors.lighGreen,
     borderRadius: 15,
     alignSelf: "center",
-    height:"7%"
-    
+    height:"7%",
+    // border
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 2.5,
+    elevation: 3,
   },
   buttons: {
     borderRadius:15,

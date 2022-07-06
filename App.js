@@ -31,7 +31,6 @@ const MainPersistedApp = () => {
 export default function App() {
   const clearAsyncStorage = async()=> {
     try {
-      console.log(config.extra.cleanAsyncStorage)
       await AsyncStorage.clear()
       showInfo({message:"AsyncStorage vaciado"})
     } catch (error) {

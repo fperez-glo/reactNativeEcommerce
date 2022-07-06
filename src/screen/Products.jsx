@@ -17,6 +17,7 @@ import { AntDesign } from "@expo/vector-icons";
 import Counter from "../components/Counter";
 import Button from "../components/Button";
 import { fetchProducts, selectedProductAddPropertie, setSelectedProduct } from "../features/products";
+import { addCartProduct } from "../features/cart";
 
 const mapStateToProps = (state) => ({
   selectedCategoryId: selectSelectedCategory(state),
@@ -29,6 +30,7 @@ const mapDispatchToProps = (dispatch) => {
       setSelectedProduct,
       selectedProductAddPropertie,
       fetchProducts,
+      addCartProduct,
     },
     dispatch
   );
@@ -40,6 +42,7 @@ const Products = ({
   setSelectedProduct,
   selectedProductAddPropertie,
   fetchProducts,
+  addCartProduct,
   // onPressProduct,
   // onPressHandleBack,
   navigation,
@@ -48,6 +51,7 @@ const Products = ({
   const [productsToFilter, setProductsToFilter] = useState([]);
   const [productInput, setProductInput] = useState("");
   const [selectedProductItem, setSelectedProductItem] = useState(undefined);
+  const [productQty, setProductQty] = useState(0);
 
   useEffect(() => {
     fetchProductsData();
@@ -67,10 +71,20 @@ const Products = ({
     setSelectedProduct(product.id);
     selectedProductAddPropertie({propertieName: "asset",data: getProductAsset(product.localAssetName)});
     navigation.navigate("ProductDetail");
-    // console.log("apreto el boton", product);
-    // addCartProduct(product);
-    // showSuccess({ message: "Producto agregado al carrito." });
   };
+
+  const onPressAddToCart = () => {
+    const productAsset = getProductAsset(selectedProductItem.localAssetName);
+    const product = {
+      id: selectedProductItem.id,
+      productQty,
+      title: selectedProductItem.title,
+      price: selectedProductItem.price,
+      asset: productAsset,
+    };
+    addCartProduct(product);
+    showSuccess({ message: "Producto agregado al carrito." });
+  }
 
   const renderProductCartOptionsOnLongPress = () => {
     return (
@@ -81,8 +95,8 @@ const Products = ({
           </TouchableOpacity>
         </View>
         <View style={styles.counterContainer}>
-          <Button onPress={() => onPressProduct(selectedProductItem)} buttonTitle="Agregar al Carrito" style={styles.addToCartButton}/>
-          <Counter maxCount={selectedProductItem?.stock}></Counter>
+          <Button onPress={() => onPressAddToCart()} buttonTitle="Agregar al Carrito" style={styles.addToCartButton}/>
+          <Counter maxCount={selectedProductItem?.stock} onChange={setProductQty}></Counter>
         </View>
       </View>
     );
@@ -96,7 +110,6 @@ const Products = ({
         renderOnLongPress={() => renderProductCartOptionsOnLongPress()}
         onLongPressCallback={() => setSelectedProductItem(item)}
         backgroundImage={getProductAsset(item.localAssetName)}
-        // backgroundImage={{uri: "http://192.168.3.45:19000/assets/src/assets/products/wdBlue500gb.png?platform=ios&hash=a2dbedb83351e2ce747bc18f246e229f?platform=ios&dev=true&hot=false&strict=false&minify=false"}}
       />
     );
   };
@@ -152,6 +165,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     alignItems: "center",
+    backgroundColor: colors.white,
   },
   productsButton: {
     backgroundColor: colors.lighGreen,
@@ -203,6 +217,7 @@ const styles = StyleSheet.create({
     // flexDirection:"row",
     justifyContent: "space-between",
     // backgroundColor: "red",
+    // backgroundColor: colors.white,
   },
   cartButtonContainer:{
     // backgroundColor:"green",

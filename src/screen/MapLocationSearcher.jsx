@@ -6,15 +6,12 @@ import {
   Text,
   StyleSheet,
   SafeAreaView,
-  ScrollView,
   Image,
   View,
   TextInput,
   ActivityIndicator,
   FlatList,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
   Dimensions,
 } from "react-native";
 import { useEffect, useState } from "react";
@@ -28,7 +25,6 @@ import { connect } from "react-redux";
 import { colors } from "../styles/globalColors";
 import { selectDeviceWidth, selectDeviceHeight } from "../store/selectors"
 import { addLocation, addDBLocation } from "../features/configuration/locations";
-import MapView from "react-native-maps"
 
 const mapStateToProps = (state) => ({
   deviceWidth: selectDeviceWidth(state),
@@ -219,14 +215,9 @@ const MapLocationSearcher = ({ navigation, addLocation, deviceWidth, deviceHeigh
   };
 
   return (
-    // <KeyboardAvoidingView
-    //   behavior={Platform.OS === "ios" ? "padding" : "height"}
-    //   style={{ flex: 1, backgroundColor:"red"}}
-    // >
       <SafeAreaView
         style={styles.container}
       >
-        
         <Text style={styles.title}>Agregar Direccion</Text>
 
         {loadingMap ? (
@@ -249,7 +240,6 @@ const MapLocationSearcher = ({ navigation, addLocation, deviceWidth, deviceHeigh
             placeholder="Direccion"
           />
           
-          {/* {console.log("deviceDimensions:",{deviceWidth, deviceHeight})} */}
           {dropDownData.length ? (
             // Meti este flatlist para utilizarlo como un dropDown asi a lo bestia pero funciona.
             <FlatList
@@ -264,7 +254,6 @@ const MapLocationSearcher = ({ navigation, addLocation, deviceWidth, deviceHeigh
                 padding: 5,
                 marginTop: 5,
               }}
-              // pagingEnabled={true}
               showsVerticalScrollIndicator={false}
             />
           ) : null}
@@ -330,7 +319,7 @@ const styles = StyleSheet.create({
   textInput: {
     width: "100%",
     height: 35,
-    backgroundColor: "white",
+    backgroundColor: colors.white,
     borderRadius: 25,
     padding: 8,
     shadowColor: "#000",
